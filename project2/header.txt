@@ -1,0 +1,9 @@
+Mathieu Lapointe [insert id]
+Maxime Laplante [insert id]
+Maxence Frenette [insert id]
+Samuel Genois 260692287
+
+Project - Part 2
+
+1.
+Having not received any feedback, we used our schema from part 1 as is.
