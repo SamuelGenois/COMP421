@@ -1,0 +1,12 @@
+DROP TABLE if exists repairtypes cascade;
+DROP TABLE if exists truckmodels cascade;
+DROP TABLE if exists rentees cascade;
+DROP TABLE if exists trucks cascade;
+DROP TABLE if exists employees cascade;
+DROP TABLE if exists mechanics cascade;
+DROP TABLE if exists salesmen cascade;
+DROP TABLE if exists appointments cascade;
+DROP TABLE if exists rentals cascade;
+DROP TABLE if exists repairs cascade;
+DROP TABLE if exists datapoints cascade;
+DROP TABLE if exists repairfrequency cascade;
