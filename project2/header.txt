@@ -1,7 +1,7 @@
-Mathieu Lapointe [insert id]
-Maxime Laplante [insert id]
-Maxence Frenette [insert id]
-Samuel Genois 260692287
+Mathieu Lapointe 260 685 906
+Maxime Laplante 260 685 695
+Maxence Frenette 260 685 124
+Samuel Genois 260 692 287
 
 Project - Part 2
 
