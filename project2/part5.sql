@@ -25,7 +25,7 @@ GROUP BY E.employee_id
 ORDER BY total_sales DESC;
 
 --Diplay all possible kinds of repairs (type and truck model) and the average cost
-SELECT DISTINCT TM.model_id, TM.model_name, TM.manufacturer, RT.repair_name,
+SELECT DISTINCT TM.model_id, TM.model_name, TM.manufacturer, R.repair_name,
 COALESCE(AVG(R.cost), 0) AS avg_cost
 FROM truckmodels AS TM
 INNER JOIN Repairfrequency AS RF
