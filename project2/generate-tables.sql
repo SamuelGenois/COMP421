@@ -7,3 +7,6 @@ CREATE TABLE Mechanics(employee_id CHAR(9) PRIMARY KEY REFERENCES Employees(empl
 CREATE TABLE Salesmen(employee_id CHAR(9) PRIMARY KEY REFERENCES Employees(employee_id));
 CREATE TABLE Appointments(appointment_id CHAR(9) PRIMARY KEY, date DATE, license_plate CHAR(6) REFERENCES Trucks(license_plate), employee_id CHAR(9) REFERENCES Mechanics(employee_id));
 CREATE TABLE Rentals(rental_id CHAR(9) PRIMARY KEY, price FLOAT, start_date DATE, end_date DATE, rentee_id INT REFERENCES Rentees(rentee_id), license_plate CHAR(6) REFERENCES Trucks(license_plate), employee_id CHAR(9) REFERENCES Salesmen(employee_id));
+CREATE TABLE Repairs(repair_id CHAR(12), cost FLOAT, appointment_id CHAR(9) REFERENCES Appointments(appointment_id), repair_name VARCHAR(30) REFERENCES RepairTypes, PRIMARY KEY (repair_id, appointment_id));
+CREATE TABLE Datapoints(datetime DATE, position VARCHAR(50), fuel_level INT, rental_id CHAR(9) REFERENCES Rentals(rental_id), PRIMARY KEY (datetime, rental_id));
+CREATE TABLE Repairfrequency(frequency INT, model_id INT REFERENCES Truckmodels(model_id), repair_name VARCHAR(30) REFERENCES Repairtypes(repair_name), PRIMARY KEY (model_id, repair_name));
