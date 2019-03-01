@@ -6,12 +6,12 @@ ON A.appointment_id=R.appointment_id
 GROUP BY A.appointment_id;
 
 --Display all trucks that require repair
-SELECT DISTINCT T.licence_plate, TM.model_name, TM.manufacture
+SELECT DISTINCT T.license_plate, TM.model_name, TM.manufacturer
 FROM Trucks AS T
 INNER JOIN truckmodels AS TM
 ON T.model_id=TM.model_id
 INNER JOIN Appointments AS A
-ON T.licence_plate=A.licence_plate
+ON T.license_plate=A.license_plate
 INNER JOIN Repairfrequency AS RF
 ON T.model_id=RF.model_id
 WHERE A.date <= current_date AND ( current_date - A.date > RF.frequency );
@@ -25,7 +25,7 @@ GROUP BY E.employee_id
 ORDER BY total_sales DESC;
 
 --Diplay all possible kinds of repairs (type and truck model) and the average cost
-SELECT DISTINCT TM.model_id, TM.model_name, TM.manufacture, RT.repair_name,
+SELECT DISTINCT TM.model_id, TM.model_name, TM.manufacturer, RT.repair_name,
 COALESCE(AVG(R.cost), 0) AS avg_cost
 FROM truckmodels AS TM
 INNER JOIN Repairfrequency AS RF
