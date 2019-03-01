@@ -14,9 +14,7 @@ INNER JOIN Appointments AS A
 ON T.licence_plate=A.licence_plate
 INNER JOIN Repairfrequency AS RF
 ON T.model_id=RF.model_id
-WHERE A.date <= current_date
-GROUP BY T.licence_plate
-HAVING ANY ( current_date-A.date > RF.frequency );
+WHERE A.date <= current_date AND ( current_date - A.date > RF.frequency );
 
 --Display list of salesman in decressing order of total rental sales
 SELECT DISTINCT E.employee_id, E.employeename, SUM(R.price) AS total_sales
