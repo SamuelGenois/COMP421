@@ -1,5 +1,6 @@
 INSERT INTO Repairtypes VALUES ('engine maintenance', 'thermocapacitor is broken, need to re-attach frame');
-INSERT INTO Truckmodels VALUES (123431343, 'F-150', 'FORD');
-INSERT INTO Rentees VALUES (4569381, 'Mongo Tremblay', '12 Grimmauld Place');
-INSERT INTO Trucks VALUES ('H70KAF', 'black', 123431343);
-INSERT INTO Trucks VALUES ('H40KAF', 'black', 123431343);
+INSERT INTO Repairtypes VALUES ('carwash', 'the vehicle is functional, but needs to be cleaned for next customer');
+INSERT INTO Repairtypes VALUES ('mechanical inspection', 'previous customer reported abnormal sounds when breaking');
+INSERT INTO Repairtypes VALUES ('change tires', 'tires have not been changed for more than 4 years');
+INSERT INTO Repairtypes VALUES ('windshield is damaged', 'an object hit the windshield, needs to be replaced or patched');
+SELECT * FROM Repairtypes;

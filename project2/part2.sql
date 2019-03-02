@@ -86,3 +86,17 @@ CREATE TABLE repairfrequency
      repair_name VARCHAR(30) REFERENCES repairtypes(repair_name), 
      PRIMARY KEY (model_id, repair_name) 
   ); 
+
+\d
+\d Repairtypes
+\d Truckmodels
+\d Rentees
+\d Trucks
+\d Employees
+\d Mechanics
+\d Salesmen
+\d Appointments
+\d Rentals
+\d Repairs
+\d Datapoints
+\d Repairfrequency
