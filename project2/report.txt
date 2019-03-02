@@ -567,3 +567,16 @@ HINT:  To enable inserting into the view, provide an INSTEAD OF INSERT trigger o
 psql:part7.sql:66: ERROR:  cannot insert into view "detailed_rentals"
 DETAIL:  Views that do not select from a single table or view are not automatically updatable.
 HINT:  To enable inserting into the view, provide an INSTEAD OF INSERT trigger or an unconditional ON INSERT DO INSTEAD rule.
+
+8. ##### Output of part8.sql #####
+
+psql:part8.sql:3: NOTICE:  constraint "chk_dates" of relation "rentals" does not exist, skipping
+ALTER TABLE
+ALTER TABLE
+psql:part8.sql:8: ERROR:  new row for relation "rentals" violates check constraint "chk_dates"
+DETAIL:  Failing row contains (6, 1300, 2019-02-10, 2019-01-08, 1, GRY520, 1).
+psql:part8.sql:12: NOTICE:  constraint "chk_license_plate" of relation "trucks" does not exist, skipping
+ALTER TABLE
+ALTER TABLE
+psql:part8.sql:17: ERROR:  new row for relation "trucks" violates check constraint "chk_license_plate"
+DETAIL:  Failing row contains (AAA11A, Yellow, 1).
