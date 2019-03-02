@@ -149,3 +149,18 @@ INSERT INTO repairtypes VALUES ('Motor reparation', '');
 INSERT INTO repairtypes VALUES ('Structure reparation', '');
 
 SELECT * FROM repairtypes;
+
+-- ##########################
+-- ###### Appointments ######
+-- ##########################
+INSERT INTO appointments VALUES (0, '2019-01-06', (SELECT license_plate FROM rentals WHERE rental_id='1'), (SELECT employee_id FROM mechanics LIMIT 1));
+
+SELECT * FROM appointments;
+
+-- #####################
+-- ###### Repairs ######
+-- #####################
+INSERT INTO repairs VALUES (0, 345, 0, 'Tire change');
+INSERT INTO repairs VALUES (1, 45, 0, 'Oil change');
+
+SELECT * FROM repairs;
