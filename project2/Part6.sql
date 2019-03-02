@@ -43,3 +43,8 @@ UPDATE rentals r SET price=0.15*
       (SELECT position FROM datapoints e WHERE e.rental_id=r.rental_id AND datetime < d.datetime ORDER BY datetime DESC LIMIT 1) AS dist
     -- Ignore the first day since there is no previous datapoint to compare to
     FROM datapoints d WHERE d.rental_id=r.rental_id ORDER BY datetime OFFSET 1) AS datapointDifferences);
+
+
+-- ##############################################################################################
+-- ###### Compute the price of a rental based on the distance computed from GPS datapoints ######
+-- ##############################################################################################

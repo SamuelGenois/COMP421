@@ -35,12 +35,16 @@ INSERT INTO rentals (price, start_date, end_date, rentee_id, license_plate, empl
 -- Update all rentals
 -- 0.15 is the price rate (could be different depending on other factors)
 UPDATE rentals r SET price=0.15*
-  -- Take half of the sum of the distance between the closest points
+  -- Take half of the sum of the distance between the closest datapoints
   (SELECT SUM(dist)/2 FROM
-    -- For every datapoint, find the closest datapoint and compute their distance
+    -- For every datapoint, find the closest datapoint in time (in the past) and compute their distance
     (SELECT position <->
       -- Get the closest datapoint in time by ordering by date
       (SELECT position FROM datapoints e WHERE e.rental_id=r.rental_id AND datetime < d.datetime ORDER BY datetime DESC LIMIT 1) AS dist
     -- Ignore the first day since there is no previous datapoint to compare to
     FROM datapoints d WHERE d.rental_id=r.rental_id ORDER BY datetime OFFSET 1) AS datapointDifferences);
 
+
+-- ##############################################################################################
+-- ###### Compute the price of a rental based on the distance computed from GPS datapoints ######
+-- ##############################################################################################
