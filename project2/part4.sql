@@ -296,14 +296,47 @@ INSERT INTO repairfrequency VALUES (360, 6, 'Tire change');
 INSERT INTO repairfrequency VALUES (620, 7, 'Tire change');
 INSERT INTO repairfrequency VALUES (540, 8, 'Tire change');
 
+\echo ###########################
+\echo ######### Rentees #########
+\echo ###########################
 SELECT * FROM Rentees LIMIT 10;
+\echo #####################################
+\echo ######### Repair Frequenciy #########
+\echo #####################################
 SELECT * FROM repairfrequency LIMIT 10;
+\echo #############################
+\echo ######### Employees #########
+\echo #############################
 SELECT * FROM employees LIMIT 10;
+\echo ############################
+\echo ######### Salesmen #########
+\echo ############################
 SELECT * FROM salesmen LIMIT 10;
+\echo #############################
+\echo ######### Mechanics #########
+\echo #############################
 SELECT * FROM mechanics LIMIT 10;
+\echo ################################
+\echo ######### Truck Models #########
+\echo ################################
 SELECT * FROM truckmodels LIMIT 10;
+\echo ###########################
+\echo ######### Trucks ##########
+\echo ###########################
 SELECT * FROM trucks LIMIT 10;
+\echo ###########################
+\echo ######### Rentals #########
+\echo ###########################
 SELECT * FROM rentals LIMIT 10;
+\echo ################################
+\echo ######### Repair Types #########
+\echo ################################
 SELECT * FROM repairtypes LIMIT 10;
+\echo ################################
+\echo ######### Appointments #########
+\echo ################################
 SELECT * FROM appointments LIMIT 10;
+\echo ###########################
+\echo ######### Repair ##########
+\echo ###########################
 SELECT * FROM repairs LIMIT 10;
