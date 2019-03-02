@@ -80,7 +80,6 @@ insert into lastname (name) VALUES
 -- #####################
 -- ###### Rentees ######
 -- #####################
-
 -- Generating a list of street names for the rentees
 -- Stree names are comgin from https://www.fantasynamegenerators.com/street-names.php
 CREATE TEMPORARY TABLE road(
@@ -231,10 +230,28 @@ INSERT INTO rentals (price, start_date, end_date, rentee_id, license_plate, empl
 
 INSERT INTO rentals (price, start_date, end_date, rentee_id, license_plate, employee_id)  VALUES (1700, '2019-01-07', '2019-01-24', (SELECT rentee_id FROM rentees OFFSET 3 LIMIT 1), (SELECT license_plate FROM trucks OFFSET 1 LIMIT 1), (SELECT employee_id FROM salesmen OFFSET 2 LIMIT 1));
 
+-- ########################
+-- ###### Datapoints ######
+-- ########################
+INSERT INTO datapoints VALUES ('2019-01-03', point(4551, -7358), 0.8, 1);
+INSERT INTO datapoints VALUES ('2019-01-04', point(4370, -7941), 0.7, 1);
+INSERT INTO datapoints VALUES ('2019-01-05', point(4370, -7358), 0.65, 1);
+INSERT INTO datapoints VALUES ('2019-01-06', point(4551, -7358), 0.6, 1);
+INSERT INTO datapoints VALUES ('2019-01-07', point(4683, -7125), 0.5, 1);
+INSERT INTO datapoints VALUES ('2019-01-08', point(4560, -7135), 0.4, 1);
+INSERT INTO datapoints VALUES ('2019-01-09', point(4440, -7376), 0.3, 1);
+INSERT INTO datapoints VALUES ('2019-01-10', point(4230, -7333), 0.2, 1);
+INSERT INTO datapoints VALUES ('2019-01-11', point(4370, -7938), 1, 1);
+INSERT INTO datapoints VALUES ('2019-01-12', point(4540, -7320), 0.9, 1);
+INSERT INTO datapoints VALUES ('2019-01-13', point(4551, -7358), 0.87, 1);
+
+INSERT INTO datapoints VALUES ('2019-01-03', point(4551, -7358), 1, 2);
+INSERT INTO datapoints VALUES ('2019-01-04', point(4370, -7941), 0.8, 2);
+INSERT INTO datapoints VALUES ('2019-01-05', point(4551, -7358), 0.6, 2);
+
 -- ##########################
 -- ###### Repair Types ######
 -- ##########################
-
 INSERT INTO repairtypes VALUES ('Tire change', 'When the tires are used or winter tires need to be installed/removed.');
 INSERT INTO repairtypes VALUES ('Oil change', '');
 INSERT INTO repairtypes VALUES ('Inspection', 'General inspection of the truck');
@@ -244,8 +261,10 @@ INSERT INTO repairtypes VALUES ('Structure reparation', '');
 -- ##########################
 -- ###### Appointments ######
 -- ##########################
-INSERT INTO appointments (date, license_plate, employee_id) VALUES ('2019-01-06', (SELECT license_plate FROM rentals WHERE rental_id='2'), (SELECT employee_id FROM mechanics LIMIT 1));
 INSERT INTO appointments (date, license_plate, employee_id) VALUES ('2019-01-16', (SELECT license_plate FROM rentals WHERE rental_id='1'), (SELECT employee_id FROM mechanics OFFSET 1 LIMIT 1));
+INSERT INTO appointments (date, license_plate, employee_id) VALUES ('2019-01-06', (SELECT license_plate FROM rentals WHERE rental_id='2'), (SELECT employee_id FROM mechanics LIMIT 1));
+INSERT INTO appointments (date, license_plate, employee_id) VALUES ('2012-01-06', (SELECT license_plate FROM rentals WHERE rental_id='1'), (SELECT employee_id FROM mechanics LIMIT 1));
+INSERT INTO appointments (date, license_plate, employee_id) VALUES ('2012-01-06', (SELECT license_plate FROM rentals WHERE rental_id='2'), (SELECT employee_id FROM mechanics LIMIT 1));
 
 -- #####################
 -- ###### Repairs ######
@@ -253,6 +272,8 @@ INSERT INTO appointments (date, license_plate, employee_id) VALUES ('2019-01-16'
 INSERT INTO repairs VALUES (345, 1, 'Tire change');
 INSERT INTO repairs VALUES (45, 1, 'Oil change');
 INSERT INTO repairs VALUES (5, 2, 'Oil change');
+INSERT INTO repairs VALUES (5, 3, 'Oil change');
+INSERT INTO repairs VALUES (5, 4, 'Oil change');
 
 -- ################################
 -- ###### Repair Frequencies ######
