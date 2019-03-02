@@ -141,7 +141,7 @@ DO $$
       -- Pick a random street number and street name
       randomaddress := CONCAT(round(random() * 300 + 1), ' ', (SELECT name FROM road ORDER BY random() LIMIT 1));
       -- Put it all together in one rentee
-      INSERT INTO Rentees VALUES (random() * 100000, randomname, randomaddress);
+      INSERT INTO Rentees (rentee_name, rentee_address) VALUES (randomname, randomaddress);
     END LOOP;
 END$$;
 
@@ -155,7 +155,7 @@ DO $$
     FOR counter IN 1..20 LOOP
       -- Pick a first and last name at random
       randomname := CONCAT((SELECT name FROM firstname ORDER BY random() LIMIT 1), ' ', (SELECT name FROM lastname ORDER BY random() LIMIT 1));
-      INSERT INTO employees VALUES (round(random() * 100000), randomname);
+      INSERT INTO employees VALUES (round(random() * 1000), randomname);
     END LOOP;
 END$$;
 
@@ -177,14 +177,14 @@ UPDATE mechanics SET specialization = 'Structure' WHERE specialization is NULL;
 -- ##########################
 -- ###### Truck Models ######
 -- ##########################
-INSERT INTO truckmodels VALUES (0, 'Full car transporter', 'Trucks & co.');
-INSERT INTO truckmodels VALUES (1, 'Concrete mixer truck', 'Trucks & co.');
-INSERT INTO truckmodels VALUES (2, 'Chiller truck', 'Trucks & co.');
-INSERT INTO truckmodels VALUES (3, 'Mobile crane', 'Trucks & co.');
-INSERT INTO truckmodels VALUES (4, 'Curtain side truck', 'Trucks & co.');
-INSERT INTO truckmodels VALUES (5, 'Full car transporter', 'SuperTrucks');
-INSERT INTO truckmodels VALUES (6, 'Concrete mixer truck', 'SuperTrucks');
-INSERT INTO truckmodels VALUES (7, 'Curtain side truck', 'SuperTrucks');
+INSERT INTO truckmodels (model_name, manufacturer) VALUES ('Full car transporter', 'Trucks & co.');
+INSERT INTO truckmodels (model_name, manufacturer) VALUES ('Concrete mixer truck', 'Trucks & co.');
+INSERT INTO truckmodels (model_name, manufacturer) VALUES ('Chiller truck', 'Trucks & co.');
+INSERT INTO truckmodels (model_name, manufacturer) VALUES ('Mobile crane', 'Trucks & co.');
+INSERT INTO truckmodels (model_name, manufacturer) VALUES ('Curtain side truck', 'Trucks & co.');
+INSERT INTO truckmodels (model_name, manufacturer) VALUES ('Full car transporter', 'SuperTrucks');
+INSERT INTO truckmodels (model_name, manufacturer) VALUES ('Concrete mixer truck', 'SuperTrucks');
+INSERT INTO truckmodels (model_name, manufacturer) VALUES ('Curtain side truck', 'SuperTrucks');
 
 -- ####################
 -- ###### Trucks ######
@@ -208,7 +208,7 @@ DO $$
     random_color VARCHAR(15);
     random_model INT;
   BEGIN
-    FOR counter IN 1..8 LOOP
+    FOR counter IN 1..3 LOOP
       -- Choose a plate
       random_license_plate := (SELECT name FROM plates EXCEPT (SELECT license_plate FROM trucks) LIMIT 1);
       -- Choose a color
@@ -223,13 +223,13 @@ END$$;
 -- #####################
 -- ###### Rentals ######
 -- #####################
-INSERT INTO rentals VALUES (0, 1300, '2019-01-01', '2019-01-13', (SELECT rentee_id FROM rentees LIMIT 1), (SELECT license_plate FROM trucks LIMIT 1), (SELECT employee_id FROM salesmen LIMIT 1));
+INSERT INTO rentals (price, start_date, end_date, rentee_id, license_plate, employee_id) VALUES (1300, '2019-01-01', '2019-01-13', (SELECT rentee_id FROM rentees LIMIT 1), (SELECT license_plate FROM trucks LIMIT 1), (SELECT employee_id FROM salesmen LIMIT 1));
 
-INSERT INTO rentals VALUES (1, 200, '2019-01-03', '2019-01-05', (SELECT rentee_id FROM rentees OFFSET 1 LIMIT 1), (SELECT license_plate FROM trucks OFFSET 1 LIMIT 1), (SELECT employee_id FROM salesmen OFFSET 1 LIMIT 1));
+INSERT INTO rentals (price, start_date, end_date, rentee_id, license_plate, employee_id)  VALUES (200, '2019-01-03', '2019-01-05', (SELECT rentee_id FROM rentees OFFSET 1 LIMIT 1), (SELECT license_plate FROM trucks OFFSET 1 LIMIT 1), (SELECT employee_id FROM salesmen OFFSET 1 LIMIT 1));
 
-INSERT INTO rentals VALUES (2, 800, '2019-01-02', '2019-01-10', (SELECT rentee_id FROM rentees OFFSET 2 LIMIT 1), (SELECT license_plate FROM trucks OFFSET 2 LIMIT 1), (SELECT employee_id FROM salesmen OFFSET 2 LIMIT 1));
+INSERT INTO rentals (price, start_date, end_date, rentee_id, license_plate, employee_id)  VALUES (800, '2019-01-02', '2019-01-10', (SELECT rentee_id FROM rentees OFFSET 2 LIMIT 1), (SELECT license_plate FROM trucks OFFSET 2 LIMIT 1), (SELECT employee_id FROM salesmen OFFSET 2 LIMIT 1));
 
-INSERT INTO rentals VALUES (3, 1700, '2019-01-07', '2019-01-24', (SELECT rentee_id FROM rentees OFFSET 3 LIMIT 1), (SELECT license_plate FROM trucks OFFSET 1 LIMIT 1), (SELECT employee_id FROM salesmen OFFSET 2 LIMIT 1));
+INSERT INTO rentals (price, start_date, end_date, rentee_id, license_plate, employee_id)  VALUES (1700, '2019-01-07', '2019-01-24', (SELECT rentee_id FROM rentees OFFSET 3 LIMIT 1), (SELECT license_plate FROM trucks OFFSET 1 LIMIT 1), (SELECT employee_id FROM salesmen OFFSET 2 LIMIT 1));
 
 -- ##########################
 -- ###### Repair Types ######
@@ -244,34 +244,36 @@ INSERT INTO repairtypes VALUES ('Structure reparation', '');
 -- ##########################
 -- ###### Appointments ######
 -- ##########################
-INSERT INTO appointments VALUES (0, '2019-01-06', (SELECT license_plate FROM rentals WHERE rental_id='1'), (SELECT employee_id FROM mechanics LIMIT 1));
+INSERT INTO appointments (date, license_plate, employee_id) VALUES ('2019-01-06', (SELECT license_plate FROM rentals WHERE rental_id='2'), (SELECT employee_id FROM mechanics LIMIT 1));
+INSERT INTO appointments (date, license_plate, employee_id) VALUES ('2019-01-16', (SELECT license_plate FROM rentals WHERE rental_id='1'), (SELECT employee_id FROM mechanics OFFSET 1 LIMIT 1));
 
 -- #####################
 -- ###### Repairs ######
 -- #####################
-INSERT INTO repairs VALUES (0, 345, 0, 'Tire change');
-INSERT INTO repairs VALUES (1, 45, 0, 'Oil change');
+INSERT INTO repairs VALUES (345, 1, 'Tire change');
+INSERT INTO repairs VALUES (45, 1, 'Oil change');
+INSERT INTO repairs VALUES (5, 2, 'Oil change');
 
 -- ################################
 -- ###### Repair Frequencies ######
 -- ################################
-INSERT INTO repairfrequency VALUES (3, 0, 'Oil change');
-INSERT INTO repairfrequency VALUES (2, 1, 'Oil change');
-INSERT INTO repairfrequency VALUES (2, 2, 'Oil change');
-INSERT INTO repairfrequency VALUES (1, 3, 'Oil change');
-INSERT INTO repairfrequency VALUES (5, 4, 'Oil change');
-INSERT INTO repairfrequency VALUES (4, 5, 'Oil change');
-INSERT INTO repairfrequency VALUES (3, 6, 'Oil change');
-INSERT INTO repairfrequency VALUES (3, 7, 'Oil change');
+INSERT INTO repairfrequency VALUES (300, 1, 'Oil change');
+INSERT INTO repairfrequency VALUES (200, 2, 'Oil change');
+INSERT INTO repairfrequency VALUES (200, 3, 'Oil change');
+INSERT INTO repairfrequency VALUES (100, 4, 'Oil change');
+INSERT INTO repairfrequency VALUES (500, 5, 'Oil change');
+INSERT INTO repairfrequency VALUES (100, 6, 'Oil change');
+INSERT INTO repairfrequency VALUES (200, 7, 'Oil change');
+INSERT INTO repairfrequency VALUES (250, 8, 'Oil change');
 
-INSERT INTO repairfrequency VALUES (24, 0, 'Tire change');
-INSERT INTO repairfrequency VALUES (18, 1, 'Tire change');
-INSERT INTO repairfrequency VALUES (24, 2, 'Tire change');
-INSERT INTO repairfrequency VALUES (24, 3, 'Tire change');
-INSERT INTO repairfrequency VALUES (24, 4, 'Tire change');
-INSERT INTO repairfrequency VALUES (36, 5, 'Tire change');
-INSERT INTO repairfrequency VALUES (24, 6, 'Tire change');
-INSERT INTO repairfrequency VALUES (18, 7, 'Tire change');
+INSERT INTO repairfrequency VALUES (440, 1, 'Tire change');
+INSERT INTO repairfrequency VALUES (380, 2, 'Tire change');
+INSERT INTO repairfrequency VALUES (340, 3, 'Tire change');
+INSERT INTO repairfrequency VALUES (540, 4, 'Tire change');
+INSERT INTO repairfrequency VALUES (440, 5, 'Tire change');
+INSERT INTO repairfrequency VALUES (360, 6, 'Tire change');
+INSERT INTO repairfrequency VALUES (620, 7, 'Tire change');
+INSERT INTO repairfrequency VALUES (540, 8, 'Tire change');
 
 SELECT * FROM Rentees LIMIT 10;
 SELECT * FROM repairfrequency LIMIT 10;
