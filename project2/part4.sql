@@ -137,3 +137,15 @@ INSERT INTO rentals VALUES (2, 800, '2019-01-02', '2019-01-10', (SELECT rentee_i
 INSERT INTO rentals VALUES (3, 1700, '2019-01-07', '2019-01-24', (SELECT rentee_id FROM rentees OFFSET 3 LIMIT 1), (SELECT license_plate FROM trucks OFFSET 1 LIMIT 1), (SELECT employee_id FROM salesmen OFFSET 2 LIMIT 1));
 
 SELECT * FROM rentals;
+
+-- ##########################
+-- ###### Repair Types ######
+-- ##########################
+
+INSERT INTO repairtypes VALUES ('Tire change', 'When the tires are used or winter tires need to be installed/removed.');
+INSERT INTO repairtypes VALUES ('Oil change', '');
+INSERT INTO repairtypes VALUES ('Inspection', 'General inspection of the truck');
+INSERT INTO repairtypes VALUES ('Motor reparation', '');
+INSERT INTO repairtypes VALUES ('Structure reparation', '');
+
+SELECT * FROM repairtypes;
