@@ -1,6 +1,6 @@
--- ####################################
--- ###### Reused data generation ######
--- ####################################
+-- ##########################
+-- ###### Re-used Data ######
+-- ##########################
 -- This data is used for insert across multiple tables
 
 -- Generating a list of first names
@@ -15,9 +15,9 @@ CREATE TEMPORARY TABLE lastname(
 insert into lastname (name) values ('Plante'), ('Lapointe'), ('Frenette'), ('Genois'), ('Montgomery'), ('Todd'), ('Parker'), ('Wright'), ('Bradley');
 
 
--- #####################################
--- ###### Generate random rentees ######
--- #####################################
+-- #####################
+-- ###### Rentees ######
+-- #####################
 
 -- Generating a list of street names for the rentees
 CREATE TEMPORARY TABLE road(
@@ -42,9 +42,9 @@ DO $$
 END$$;
 SELECT * FROM Rentees;
 
--- #######################################
--- ###### Generate random employees ######
--- #######################################
+-- #######################
+-- ###### Employees ######
+-- #######################
 DO $$
   DECLARE
     randomname varchar(100);
@@ -75,9 +75,9 @@ UPDATE mechanics SET specialization = 'Structure' WHERE specialization is NULL;
 
 SELECT * FROM mechanics;
 
--- ###################################
--- ###### Generate truck models ######
--- ###################################
+-- ##########################
+-- ###### Truck Models ######
+-- ##########################
 INSERT INTO truckmodels VALUES (0, 'Full car transporter', 'Trucks & co.');
 INSERT INTO truckmodels VALUES (1, 'Concrete mixer truck', 'Trucks & co.');
 INSERT INTO truckmodels VALUES (2, 'Chiller truck', 'Trucks & co.');
@@ -89,9 +89,9 @@ INSERT INTO truckmodels VALUES (7, 'Curtain side truck', 'SuperTrucks');
 
 SELECT * FROM truckmodels;
 
--- #############################
--- ###### Generate trucks ######
--- #############################
+-- ####################
+-- ###### Trucks ######
+-- ####################
 -- All the possible colors of a truck
 CREATE TEMPORARY TABLE colors(
   name varchar(15)
@@ -125,9 +125,9 @@ END$$;
 
 SELECT * FROM trucks;
 
--- ##############################
--- ###### Generate rentals ######
--- ##############################
+-- #####################
+-- ###### Rentals ######
+-- #####################
 INSERT INTO rentals VALUES (0, 1300, '2019-01-01', '2019-01-13', (SELECT rentee_id FROM rentees LIMIT 1), (SELECT license_plate FROM trucks LIMIT 1), (SELECT employee_id FROM salesmen LIMIT 1));
 
 INSERT INTO rentals VALUES (1, 200, '2019-01-03', '2019-01-05', (SELECT rentee_id FROM rentees OFFSET 1 LIMIT 1), (SELECT license_plate FROM trucks OFFSET 1 LIMIT 1), (SELECT employee_id FROM salesmen OFFSET 1 LIMIT 1));
