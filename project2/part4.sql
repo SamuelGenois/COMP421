@@ -124,3 +124,16 @@ DO $$
 END$$;
 
 SELECT * FROM trucks;
+
+-- ##############################
+-- ###### Generate rentals ######
+-- ##############################
+INSERT INTO rentals VALUES (0, 1300, '2019-01-01', '2019-01-13', (SELECT rentee_id FROM rentees LIMIT 1), (SELECT license_plate FROM trucks LIMIT 1), (SELECT employee_id FROM salesmen LIMIT 1));
+
+INSERT INTO rentals VALUES (1, 200, '2019-01-03', '2019-01-05', (SELECT rentee_id FROM rentees OFFSET 1 LIMIT 1), (SELECT license_plate FROM trucks OFFSET 1 LIMIT 1), (SELECT employee_id FROM salesmen OFFSET 1 LIMIT 1));
+
+INSERT INTO rentals VALUES (2, 800, '2019-01-02', '2019-01-10', (SELECT rentee_id FROM rentees OFFSET 2 LIMIT 1), (SELECT license_plate FROM trucks OFFSET 2 LIMIT 1), (SELECT employee_id FROM salesmen OFFSET 2 LIMIT 1));
+
+INSERT INTO rentals VALUES (3, 1700, '2019-01-07', '2019-01-24', (SELECT rentee_id FROM rentees OFFSET 3 LIMIT 1), (SELECT license_plate FROM trucks OFFSET 1 LIMIT 1), (SELECT employee_id FROM salesmen OFFSET 2 LIMIT 1));
+
+SELECT * FROM rentals;
