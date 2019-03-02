@@ -72,8 +72,8 @@ CREATE TABLE repairs
 CREATE TABLE datapoints
   (
      datetime   DATE,
-     position   VARCHAR(50),
-     fuel_level INT,
+     position   point,
+     fuel_level FLOAT,
      rental_id  INT REFERENCES rentals(rental_id),
      PRIMARY KEY (datetime, rental_id)
   );
