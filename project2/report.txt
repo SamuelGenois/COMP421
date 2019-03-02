@@ -5,6 +5,11 @@ Samuel Genois 260 692 287
 
 Project - Part 2
 
+This file contains the output from the various SQL scripts that we wrote. Each script is named after its corresponding question (i.e part3.sql). We also included some helper scripts:
+
+- setup.sql: deletes all tables
+- rebuild.bash: runs all the scripts and prints their respective outputs
+
 0. Having not received any feedback, we used our schema from part 1 as is.
 1. ##### Output of part2.sql (which creates the tables) #####
 
