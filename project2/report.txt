@@ -516,3 +516,18 @@ INSERT 0 1
            1 | Rona Montgomery   | 2019-01-01
 (20 rows)
 
+6. The description and explanation of each modification query for Q6 are commented
+inside the SQL code (part6.sql).
+
+Query 1: Create an appointment
+We can see that, before the execution of part6.sql, there are four rentals.
+After the execution of part6.sql there are 5 assignments and the truck that
+was selected is the only one that does not have a rental or an appointment during the
+rent period.
+
+Query 2: Compute the price of the rental
+Initially, there are hardcoded prices created by part4.sql (for demonstration only).
+Then, once part6.sql is executed, the actual prices are computed based on the distance
+between the different position in the datapoints of each rental. Only two rental have
+datapoints thus the other rentals have no price yet.
+
