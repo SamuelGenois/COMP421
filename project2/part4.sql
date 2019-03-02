@@ -4,15 +4,77 @@
 -- This data is used for insert across multiple tables
 
 -- Generating a list of first names
+-- Source: http://listofrandomnames.com/
 CREATE TEMPORARY TABLE firstname(
   name varchar(10)
 );
-insert into firstname (name) values ('Maxime'), ('Mathieu'), ('Maxence'), ('Samuel'), ('John'), ('Bob'), ('Rick'), ('Alice'), ('Gabriella');
+insert into firstname (name) VALUES
+  ('Maxime'),
+  ('Mathieu'),
+  ('Maxence'),
+  ('Samuel'),
+  ('John'),
+  ('Bob'),
+  ('Rick'),
+  ('Alice'),
+  ('Gabriella'),
+  ('Shin'),
+  ('Hobert'),
+  ('Eleonor'),
+  ('Pablo'),
+  ('Catrina'),
+  ('Sharyn'),
+  ('Bettyann'),
+  ('Jenniffer'),
+  ('Alverta'),
+  ('Olimpia'),
+  ('Arianna'),
+  ('Willis'),
+  ('Mariah'),
+  ('Jeramy'),
+  ('Colby'),
+  ('Kristeen'),
+  ('Rona'),
+  ('Terresa'),
+  ('Stefania'),
+  ('Juliann')
+;
 -- Generating a list of last names
+-- Source: http://listofrandomnames.com/
 CREATE TEMPORARY TABLE lastname(
   name varchar(10)
 );
-insert into lastname (name) values ('Plante'), ('Lapointe'), ('Frenette'), ('Genois'), ('Montgomery'), ('Todd'), ('Parker'), ('Wright'), ('Bradley');
+insert into lastname (name) VALUES
+  ('Plante'),
+  ('Lapointe'),
+  ('Frenette'),
+  ('Genois'),
+  ('Montgomery'),
+  ('Todd'),
+  ('Parker'),
+  ('Wright'),
+  ('Bradley'),
+  ('Brady'),
+  ('Ruppert'),
+  ('Simmon'),
+  ('Fryman'),
+  ('Riding'),
+  ('Coyle'),
+  ('Ketcham'),
+  ('Zale'),
+  ('Kopec'),
+  ('Eaddy'),
+  ('Frew'),
+  ('Marsden'),
+  ('Ballantyne'),
+  ('Perrin'),
+  ('Baum'),
+  ('Bran'),
+  ('Hunkins'),
+  ('Winford'),
+  ('Gandara'),
+  ('Fontana')
+;
 
 
 -- #####################
@@ -20,10 +82,52 @@ insert into lastname (name) values ('Plante'), ('Lapointe'), ('Frenette'), ('Gen
 -- #####################
 
 -- Generating a list of street names for the rentees
+-- Stree names are comgin from https://www.fantasynamegenerators.com/street-names.php
 CREATE TEMPORARY TABLE road(
   name varchar(30)
 );
-insert into road (name) values ('Liberty Lane'), ('Palm Way'), ('Hind Street'), ('Legend Route'), ('Castle Route'), ('Yew Avenue'), ('Duchess Lane'), ('Prince Way'), ('Cavern Avenue');
+insert into road (name) VALUES
+  ('Gem Street'),
+  ('College Lane'),
+  ('Prospect Route'),
+  ('Trinity Lane'),
+  ('Lower Lane'),
+  ('Long Avenue'),
+  ('Dawn Lane'),
+  ('Judge Passage'),
+  ('Snowflake Avenue'),
+  ('Petal Lane'),
+  ('Kings Avenue'),
+  ('Fountain Street'),
+  ('Cannon Boulevard'),
+  ('Coastline Street'),
+  ('Windmill Boulevard'),
+  ('Ivory Lane'),
+  ('Java Avenue'),
+  ('Cottage Street'),
+  ('Fletcher Avenue'),
+  ('Bath Row'),
+  ('Flax Lane'),
+  ('Hart Avenue'),
+  ('Coach Route'),
+  ('Broad Boulevard'),
+  ('Vale Way'),
+  ('Little Passage'),
+  ('Arcade Lane'),
+  ('Harbor Way'),
+  ('Ocean Lane'),
+  ('Legend Passage'),
+  ('Underwood Street'),
+  ('Sun Avenue'),
+  ('Elmwood Avenue'),
+  ('Providence Way'),
+  ('Nightingale Boulevard'),
+  ('Auburn Passage'),
+  ('Dew Avenue'),
+  ('Justice Street'),
+  ('Baker Way'),
+  ('Meadow Way')
+;
 
 -- Loop inserting rentees
 DO $$
@@ -31,7 +135,7 @@ DO $$
     randomname varchar(100);
     randomaddress varchar(100);
   BEGIN
-    FOR counter IN 1..20 LOOP
+    FOR counter IN 1..200 LOOP
       -- Pick a first and last name at random
       randomname := CONCAT((SELECT name FROM firstname ORDER BY random() LIMIT 1), ' ', (SELECT name FROM lastname ORDER BY random() LIMIT 1));
       -- Pick a random street number and street name
@@ -40,7 +144,6 @@ DO $$
       INSERT INTO Rentees VALUES (random() * 100000, randomname, randomaddress);
     END LOOP;
 END$$;
-SELECT * FROM Rentees;
 
 -- #######################
 -- ###### Employees ######
@@ -55,12 +158,10 @@ DO $$
       INSERT INTO employees VALUES (round(random() * 100000), randomname);
     END LOOP;
 END$$;
-SELECT * FROM employees;
 
 -- Insert half of the employees into the salesmen table
 INSERT INTO salesmen
 SELECT employee_id FROM employees LIMIT 10;
-SELECT * FROM salesmen;
 
 -- Insert all the employees that are not salesmen into the mechanics table
 INSERT INTO mechanics
@@ -73,8 +174,6 @@ UPDATE mechanics m SET specialization = 'Motors' FROM halfMechanics WHERE halfMe
 -- All the mechanics that are not motor specialist is a structure specialist
 UPDATE mechanics SET specialization = 'Structure' WHERE specialization is NULL;
 
-SELECT * FROM mechanics;
-
 -- ##########################
 -- ###### Truck Models ######
 -- ##########################
@@ -86,8 +185,6 @@ INSERT INTO truckmodels VALUES (4, 'Curtain side truck', 'Trucks & co.');
 INSERT INTO truckmodels VALUES (5, 'Full car transporter', 'SuperTrucks');
 INSERT INTO truckmodels VALUES (6, 'Concrete mixer truck', 'SuperTrucks');
 INSERT INTO truckmodels VALUES (7, 'Curtain side truck', 'SuperTrucks');
-
-SELECT * FROM truckmodels;
 
 -- ####################
 -- ###### Trucks ######
@@ -123,8 +220,6 @@ DO $$
     END LOOP;
 END$$;
 
-SELECT * FROM trucks;
-
 -- #####################
 -- ###### Rentals ######
 -- #####################
@@ -136,8 +231,6 @@ INSERT INTO rentals VALUES (2, 800, '2019-01-02', '2019-01-10', (SELECT rentee_i
 
 INSERT INTO rentals VALUES (3, 1700, '2019-01-07', '2019-01-24', (SELECT rentee_id FROM rentees OFFSET 3 LIMIT 1), (SELECT license_plate FROM trucks OFFSET 1 LIMIT 1), (SELECT employee_id FROM salesmen OFFSET 2 LIMIT 1));
 
-SELECT * FROM rentals;
-
 -- ##########################
 -- ###### Repair Types ######
 -- ##########################
@@ -148,14 +241,10 @@ INSERT INTO repairtypes VALUES ('Inspection', 'General inspection of the truck')
 INSERT INTO repairtypes VALUES ('Motor reparation', '');
 INSERT INTO repairtypes VALUES ('Structure reparation', '');
 
-SELECT * FROM repairtypes;
-
 -- ##########################
 -- ###### Appointments ######
 -- ##########################
 INSERT INTO appointments VALUES (0, '2019-01-06', (SELECT license_plate FROM rentals WHERE rental_id='1'), (SELECT employee_id FROM mechanics LIMIT 1));
-
-SELECT * FROM appointments;
 
 -- #####################
 -- ###### Repairs ######
@@ -163,4 +252,35 @@ SELECT * FROM appointments;
 INSERT INTO repairs VALUES (0, 345, 0, 'Tire change');
 INSERT INTO repairs VALUES (1, 45, 0, 'Oil change');
 
-SELECT * FROM repairs;
+-- ################################
+-- ###### Repair Frequencies ######
+-- ################################
+INSERT INTO repairfrequency VALUES (3, 0, 'Oil change');
+INSERT INTO repairfrequency VALUES (2, 1, 'Oil change');
+INSERT INTO repairfrequency VALUES (2, 2, 'Oil change');
+INSERT INTO repairfrequency VALUES (1, 3, 'Oil change');
+INSERT INTO repairfrequency VALUES (5, 4, 'Oil change');
+INSERT INTO repairfrequency VALUES (4, 5, 'Oil change');
+INSERT INTO repairfrequency VALUES (3, 6, 'Oil change');
+INSERT INTO repairfrequency VALUES (3, 7, 'Oil change');
+
+INSERT INTO repairfrequency VALUES (24, 0, 'Tire change');
+INSERT INTO repairfrequency VALUES (18, 1, 'Tire change');
+INSERT INTO repairfrequency VALUES (24, 2, 'Tire change');
+INSERT INTO repairfrequency VALUES (24, 3, 'Tire change');
+INSERT INTO repairfrequency VALUES (24, 4, 'Tire change');
+INSERT INTO repairfrequency VALUES (36, 5, 'Tire change');
+INSERT INTO repairfrequency VALUES (24, 6, 'Tire change');
+INSERT INTO repairfrequency VALUES (18, 7, 'Tire change');
+
+SELECT * FROM Rentees LIMIT 10;
+SELECT * FROM repairfrequency LIMIT 10;
+SELECT * FROM employees LIMIT 10;
+SELECT * FROM salesmen LIMIT 10;
+SELECT * FROM mechanics LIMIT 10;
+SELECT * FROM truckmodels LIMIT 10;
+SELECT * FROM trucks LIMIT 10;
+SELECT * FROM rentals LIMIT 10;
+SELECT * FROM repairtypes LIMIT 10;
+SELECT * FROM appointments LIMIT 10;
+SELECT * FROM repairs LIMIT 10;
