@@ -32,7 +32,7 @@ INNER JOIN Repairfrequency AS RF
 ON TM.model_id=RF.model_id
 LEFT JOIN Repairs AS R
 ON RF.repair_name=R.repair_name
-GROUP BY TM.model;
+GROUP BY TM.model_id;
 
 --Display list of employees sorted by latest activity (latest completed appointment/rental sale)
 SELECT DISTINCT E.employee_id, E.employee_name,
