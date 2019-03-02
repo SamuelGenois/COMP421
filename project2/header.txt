@@ -6,9 +6,7 @@ Samuel Genois 260 692 287
 Project - Part 2
 
 0. Having not received any feedback, we used our schema from part 1 as is.
-1. 
-
-## Output of running part2.sql (which creates the tables) ##
+1. ##### Output of running part2.sql (which creates the tables) #####
 
 CREATE TABLE
 CREATE TABLE
@@ -193,9 +191,7 @@ Foreign-key constraints:
     "repairfrequency_model_id_fkey" FOREIGN KEY (model_id) REFERENCES truckmodels(model_id)
     "repairfrequency_repair_name_fkey" FOREIGN KEY (repair_name) REFERENCES repairtypes(repair_name)
     
-3. 
-
-## Output of running part3.sql ##
+3. ##### Output of running part3.sql #####
 
 INSERT 0 1
 INSERT 0 1
@@ -211,3 +207,238 @@ INSERT 0 1
  windshield is damaged | an object hit the windshield, needs to be replaced or patched
 (5 rows)
 
+4. ##### Output of running part4.sql #####
+
+CREATE TABLE
+INSERT 0 29
+CREATE TABLE
+INSERT 0 29
+CREATE TABLE
+INSERT 0 40
+DO
+DO
+INSERT 0 10
+INSERT 0 10
+UPDATE 5
+UPDATE 5
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+CREATE TABLE
+INSERT 0 8
+CREATE TABLE
+INSERT 0 8
+DO
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+###########################
+######### Rentees #########
+###########################
+ rentee_id |   rentee_name   |   rentee_address    
+-----------+-----------------+---------------------
+         1 | Bettyann Parker | 244 Broad Boulevard
+         2 | Alice Parker    | 192 Broad Boulevard
+         3 | Colby Riding    | 142 Cottage Street
+         4 | Bob Parker      | 153 Legend Passage
+         5 | Bettyann Coyle  | 152 Ivory Lane
+         6 | Hobert Zale     | 251 Little Passage
+         7 | Alice Fontana   | 97 Fountain Street
+         8 | Rick Montgomery | 182 Judge Passage
+         9 | Maxime Baum     | 20 Bath Row
+        10 | Colby Baum      | 96 Little Passage
+(10 rows)
+
+#####################################
+######### Repair Frequenciy #########
+#####################################
+ frequency | model_id | repair_name 
+-----------+----------+-------------
+       300 |        1 | Oil change
+       200 |        2 | Oil change
+       200 |        3 | Oil change
+       100 |        4 | Oil change
+       500 |        5 | Oil change
+       100 |        6 | Oil change
+       200 |        7 | Oil change
+       250 |        8 | Oil change
+       440 |        1 | Tire change
+       380 |        2 | Tire change
+(10 rows)
+
+#############################
+######### Employees #########
+#############################
+ employee_id |   employee_name    
+-------------+--------------------
+           1 | Olimpia Genois
+           2 | Jenniffer Brady
+           3 | Jeramy Ruppert
+           4 | Sharyn Ruppert
+           5 | John Frew
+           6 | Alice Ketcham
+           7 | Bettyann Fryman
+           8 | Mathieu Ballantyne
+           9 | Maxime Perrin
+          10 | Willis Winford
+(10 rows)
+
+############################
+######### Salesmen #########
+############################
+ employee_id 
+-------------
+           1
+           2
+           3
+           4
+           5
+           6
+           7
+           8
+           9
+          10
+(10 rows)
+
+#############################
+######### Mechanics #########
+#############################
+ employee_id | specialization 
+-------------+----------------
+          20 | Motors
+          11 | Motors
+          17 | Motors
+          12 | Motors
+          18 | Motors
+          15 | Structure
+          13 | Structure
+          19 | Structure
+          16 | Structure
+          14 | Structure
+(10 rows)
+
+################################
+######### Truck Models #########
+################################
+ model_id |      model_name      | manufacturer 
+----------+----------------------+--------------
+        1 | Full car transporter | Trucks & co.
+        2 | Concrete mixer truck | Trucks & co.
+        3 | Chiller truck        | Trucks & co.
+        4 | Mobile crane         | Trucks & co.
+        5 | Curtain side truck   | Trucks & co.
+        6 | Full car transporter | SuperTrucks
+        7 | Concrete mixer truck | SuperTrucks
+        8 | Curtain side truck   | SuperTrucks
+(8 rows)
+
+###########################
+######### Trucks ##########
+###########################
+ license_plate | color | model_id 
+---------------+-------+----------
+ GRY520        | Pink  |        8
+ APE510        | Green |        7
+ QPC735        | Green |        1
+(3 rows)
+
+###########################
+######### Rentals #########
+###########################
+ rental_id | price | start_date |  end_date  | rentee_id | license_plate | employee_id 
+-----------+-------+------------+------------+-----------+---------------+-------------
+         1 |  1300 | 2019-01-01 | 2019-01-13 |         1 | GRY520        |           1
+         2 |   200 | 2019-01-03 | 2019-01-05 |         2 | APE510        |           2
+         3 |   800 | 2019-01-02 | 2019-01-10 |         3 | QPC735        |           3
+         4 |  1700 | 2019-01-07 | 2019-01-24 |         4 | APE510        |           3
+(4 rows)
+
+################################
+######### Repair Types #########
+################################
+      repair_name      |                              description                              
+-----------------------+-----------------------------------------------------------------------
+ engine maintenance    | thermocapacitor is broken, need to re-attach frame
+ carwash               | the vehicle is functional, but needs to be cleaned for next customer
+ mechanical inspection | previous customer reported abnormal sounds when breaking
+ change tires          | tires have not been changed for more than 4 years
+ windshield is damaged | an object hit the windshield, needs to be replaced or patched
+ Tire change           | When the tires are used or winter tires need to be installed/removed.
+ Oil change            | 
+ Inspection            | General inspection of the truck
+ Motor reparation      | 
+ Structure reparation  | 
+(10 rows)
+
+################################
+######### Appointments #########
+################################
+ appointment_id |    date    | license_plate | employee_id 
+----------------+------------+---------------+-------------
+              1 | 2019-01-16 | GRY520        |          11
+              2 | 2019-01-06 | APE510        |          20
+              3 | 2012-01-06 | GRY520        |          20
+              4 | 2012-01-06 | APE510        |          20
+(4 rows)
+
+###########################
+######### Repair ##########
+###########################
+ cost | appointment_id | repair_name 
+------+----------------+-------------
+  345 |              1 | Tire change
+   45 |              1 | Oil change
+    5 |              2 | Oil change
+    5 |              3 | Oil change
+    5 |              4 | Oil change
+(5 rows)
