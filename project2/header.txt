@@ -195,7 +195,7 @@ Foreign-key constraints:
     
 3. 
 
-## Output of running part3.sql (which creates the tables) ##
+## Output of running part3.sql ##
 
 INSERT 0 1
 INSERT 0 1
