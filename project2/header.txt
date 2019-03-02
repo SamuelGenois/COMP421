@@ -5,5 +5,209 @@ Samuel Genois 260 692 287
 
 Project - Part 2
 
-1.
-Having not received any feedback, we used our schema from part 1 as is.
+0. Having not received any feedback, we used our schema from part 1 as is.
+1. 
+
+## Output of running part2.sql (which creates the tables) ##
+
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+
+               List of relations
+  Schema  |      Name       | Type  |  Owner   
+----------+-----------------+-------+----------
+ cs421g28 | appointments    | table | cs421g28
+ cs421g28 | datapoints      | table | cs421g28
+ cs421g28 | employees       | table | cs421g28
+ cs421g28 | mechanics       | table | cs421g28
+ cs421g28 | rentals         | table | cs421g28
+ cs421g28 | rentees         | table | cs421g28
+ cs421g28 | repairfrequency | table | cs421g28
+ cs421g28 | repairs         | table | cs421g28
+ cs421g28 | repairtypes     | table | cs421g28
+ cs421g28 | salesmen        | table | cs421g28
+ cs421g28 | truckmodels     | table | cs421g28
+ cs421g28 | trucks          | table | cs421g28
+(12 rows)
+
+           Table "cs421g28.repairtypes"
+   Column    |          Type          | Modifiers 
+-------------+------------------------+-----------
+ repair_name | character varying(30)  | not null
+ description | character varying(200) | 
+Indexes:
+    "repairtypes_pkey" PRIMARY KEY, btree (repair_name)
+Referenced by:
+    TABLE "repairfrequency" CONSTRAINT "repairfrequency_repair_name_fkey" FOREIGN KEY (repair_name) REFERENCES repairtypes(repair_name)
+    TABLE "repairs" CONSTRAINT "repairs_repair_name_fkey" FOREIGN KEY (repair_name) REFERENCES repairtypes(repair_name)
+
+           Table "cs421g28.truckmodels"
+    Column    |         Type          | Modifiers 
+--------------+-----------------------+-----------
+ model_id     | integer               | not null
+ model_name   | character varying(20) | 
+ manufacturer | character varying(20) | 
+Indexes:
+    "truckmodels_pkey" PRIMARY KEY, btree (model_id)
+Referenced by:
+    TABLE "repairfrequency" CONSTRAINT "repairfrequency_model_id_fkey" FOREIGN KEY (model_id) REFERENCES truckmodels(model_id)
+    TABLE "trucks" CONSTRAINT "trucks_model_id_fkey" FOREIGN KEY (model_id) REFERENCES truckmodels(model_id)
+
+              Table "cs421g28.rentees"
+     Column     |         Type          | Modifiers 
+----------------+-----------------------+-----------
+ rentee_id      | integer               | not null
+ rentee_name    | character varying(30) | 
+ rentee_address | character varying(40) | 
+Indexes:
+    "rentees_pkey" PRIMARY KEY, btree (rentee_id)
+Referenced by:
+    TABLE "rentals" CONSTRAINT "rentals_rentee_id_fkey" FOREIGN KEY (rentee_id) REFERENCES rentees(rentee_id)
+
+              Table "cs421g28.trucks"
+    Column     |         Type          | Modifiers 
+---------------+-----------------------+-----------
+ license_plate | character(6)          | not null
+ color         | character varying(15) | 
+ model_id      | integer               | 
+Indexes:
+    "trucks_pkey" PRIMARY KEY, btree (license_plate)
+Foreign-key constraints:
+    "trucks_model_id_fkey" FOREIGN KEY (model_id) REFERENCES truckmodels(model_id)
+Referenced by:
+    TABLE "appointments" CONSTRAINT "appointments_license_plate_fkey" FOREIGN KEY (license_plate) REFERENCES trucks(license_plate)
+    TABLE "rentals" CONSTRAINT "rentals_license_plate_fkey" FOREIGN KEY (license_plate) REFERENCES trucks(license_plate)
+
+            Table "cs421g28.employees"
+    Column     |         Type          | Modifiers 
+---------------+-----------------------+-----------
+ employee_id   | character(9)          | not null
+ employee_name | character varying(40) | 
+Indexes:
+    "employees_pkey" PRIMARY KEY, btree (employee_id)
+Referenced by:
+    TABLE "mechanics" CONSTRAINT "mechanics_employee_id_fkey" FOREIGN KEY (employee_id) REFERENCES employees(employee_id)
+    TABLE "salesmen" CONSTRAINT "salesmen_employee_id_fkey" FOREIGN KEY (employee_id) REFERENCES employees(employee_id)
+
+             Table "cs421g28.mechanics"
+     Column     |         Type          | Modifiers 
+----------------+-----------------------+-----------
+ employee_id    | character(9)          | not null
+ specialization | character varying(20) | 
+Indexes:
+    "mechanics_pkey" PRIMARY KEY, btree (employee_id)
+Foreign-key constraints:
+    "mechanics_employee_id_fkey" FOREIGN KEY (employee_id) REFERENCES employees(employee_id)
+Referenced by:
+    TABLE "appointments" CONSTRAINT "appointments_employee_id_fkey" FOREIGN KEY (employee_id) REFERENCES mechanics(employee_id)
+
+       Table "cs421g28.salesmen"
+   Column    |     Type     | Modifiers 
+-------------+--------------+-----------
+ employee_id | character(9) | not null
+Indexes:
+    "salesmen_pkey" PRIMARY KEY, btree (employee_id)
+Foreign-key constraints:
+    "salesmen_employee_id_fkey" FOREIGN KEY (employee_id) REFERENCES employees(employee_id)
+Referenced by:
+    TABLE "rentals" CONSTRAINT "rentals_employee_id_fkey" FOREIGN KEY (employee_id) REFERENCES salesmen(employee_id)
+
+       Table "cs421g28.appointments"
+     Column     |     Type     | Modifiers 
+----------------+--------------+-----------
+ appointment_id | character(9) | not null
+ date           | date         | 
+ license_plate  | character(6) | 
+ employee_id    | character(9) | 
+Indexes:
+    "appointments_pkey" PRIMARY KEY, btree (appointment_id)
+Foreign-key constraints:
+    "appointments_employee_id_fkey" FOREIGN KEY (employee_id) REFERENCES mechanics(employee_id)
+    "appointments_license_plate_fkey" FOREIGN KEY (license_plate) REFERENCES trucks(license_plate)
+Referenced by:
+    TABLE "repairs" CONSTRAINT "repairs_appointment_id_fkey" FOREIGN KEY (appointment_id) REFERENCES appointments(appointment_id)
+
+           Table "cs421g28.rentals"
+    Column     |       Type       | Modifiers 
+---------------+------------------+-----------
+ rental_id     | character(9)     | not null
+ price         | double precision | 
+ start_date    | date             | 
+ end_date      | date             | 
+ rentee_id     | integer          | 
+ license_plate | character(6)     | 
+ employee_id   | character(9)     | 
+Indexes:
+    "rentals_pkey" PRIMARY KEY, btree (rental_id)
+Foreign-key constraints:
+    "rentals_employee_id_fkey" FOREIGN KEY (employee_id) REFERENCES salesmen(employee_id)
+    "rentals_license_plate_fkey" FOREIGN KEY (license_plate) REFERENCES trucks(license_plate)
+    "rentals_rentee_id_fkey" FOREIGN KEY (rentee_id) REFERENCES rentees(rentee_id)
+Referenced by:
+    TABLE "datapoints" CONSTRAINT "datapoints_rental_id_fkey" FOREIGN KEY (rental_id) REFERENCES rentals(rental_id)
+
+              Table "cs421g28.repairs"
+     Column     |         Type          | Modifiers 
+----------------+-----------------------+-----------
+ repair_id      | character(12)         | not null
+ cost           | double precision      | 
+ appointment_id | character(9)          | not null
+ repair_name    | character varying(30) | 
+Indexes:
+    "repairs_pkey" PRIMARY KEY, btree (repair_id, appointment_id)
+Foreign-key constraints:
+    "repairs_appointment_id_fkey" FOREIGN KEY (appointment_id) REFERENCES appointments(appointment_id)
+    "repairs_repair_name_fkey" FOREIGN KEY (repair_name) REFERENCES repairtypes(repair_name)
+
+          Table "cs421g28.datapoints"
+   Column   |         Type          | Modifiers 
+------------+-----------------------+-----------
+ datetime   | date                  | not null
+ position   | character varying(50) | 
+ fuel_level | integer               | 
+ rental_id  | character(9)          | not null
+Indexes:
+    "datapoints_pkey" PRIMARY KEY, btree (datetime, rental_id)
+Foreign-key constraints:
+    "datapoints_rental_id_fkey" FOREIGN KEY (rental_id) REFERENCES rentals(rental_id)
+
+        Table "cs421g28.repairfrequency"
+   Column    |         Type          | Modifiers 
+-------------+-----------------------+-----------
+ frequency   | integer               | 
+ model_id    | integer               | not null
+ repair_name | character varying(30) | not null
+Indexes:
+    "repairfrequency_pkey" PRIMARY KEY, btree (model_id, repair_name)
+Foreign-key constraints:
+    "repairfrequency_model_id_fkey" FOREIGN KEY (model_id) REFERENCES truckmodels(model_id)
+    "repairfrequency_repair_name_fkey" FOREIGN KEY (repair_name) REFERENCES repairtypes(repair_name)
+    
+3. 
+
+## Output of running part3.sql (which creates the tables) ##
+
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+      repair_name      |                             description                              
+-----------------------+----------------------------------------------------------------------
+ engine maintenance    | thermocapacitor is broken, need to re-attach frame
+ carwash               | the vehicle is functional, but needs to be cleaned for next customer
+ mechanical inspection | previous customer reported abnormal sounds when breaking
+ change tires          | tires have not been changed for more than 4 years
+ windshield is damaged | an object hit the windshield, needs to be replaced or patched
+(5 rows)
+
