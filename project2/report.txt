@@ -531,3 +531,39 @@ Then, once part6.sql is executed, the actual prices are computed based on the di
 between the different position in the datapoints of each rental. Only two rental have
 datapoints thus the other rentals have no price yet.
 
+7. ##### Output of part7.sql #####
+
+psql:part7.sql:4: NOTICE:  view "mechanics_experience" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+ employee_id |  employee_name   | model_id |      model_name      | manufacturer | number_of_repairs 
+-------------+------------------+----------+----------------------+--------------+-------------------
+          20 | Mariah Todd      |        6 | Full car transporter | SuperTrucks  |                 1
+          11 | Pablo Ballantyne |        6 | Full car transporter | SuperTrucks  |                 1
+          20 | Mariah Todd      |        4 | Mobile crane         | Trucks & co. |                 2
+(3 rows)
+
+psql:part7.sql:28: NOTICE:  view "detailed_rentals" does not exist, skipping
+DROP VIEW
+CREATE VIEW
+ rental_id |      price       | start_date |  end_date  | rentee_id |    rentee_name     |    rentee_address    | license_plate | color  | model_id | employee_id |  employee_name  
+-----------+------------------+------------+------------+-----------+--------------------+----------------------+---------------+--------+----------+-------------+-----------------
+         1 | 266.304914070359 | 2019-01-01 | 2019-01-13 |         1 | Samuel Winford     | 299 Baker Way        | GRY520        | White  |        6 |           1 | Alice Parker
+         2 | 91.5675979809452 | 2019-01-03 | 2019-01-05 |         2 | Alverta Gandara    | 164 Legend Passage   | APE510        | Yellow |        4 |           2 | Sharyn Frew
+         3 |                  | 2019-01-02 | 2019-01-10 |         3 | Maxence Ballantyne | 287 Coastline Street | QPC735        | Pink   |        6 |           3 | Mathieu Gandara
+         4 |                  | 2019-01-07 | 2019-01-24 |         4 | Shin Fontana       | 232 College Lane     | APE510        | Yellow |        4 |           3 | Mathieu Gandara
+         5 |                  | 2019-01-14 | 2019-01-20 |       116 | Sharyn Winford     | 23 Prospect Route    | QPC735        | Pink   |        6 |           4 | Alverta Hunkins
+(5 rows)
+
+ rental_id | price | start_date |  end_date  | rentee_id |  rentee_name   |  rentee_address   | license_plate | color  | model_id | employee_id |  employee_name  
+-----------+-------+------------+------------+-----------+----------------+-------------------+---------------+--------+----------+-------------+-----------------
+         4 |       | 2019-01-07 | 2019-01-24 |         4 | Shin Fontana   | 232 College Lane  | APE510        | Yellow |        4 |           3 | Mathieu Gandara
+         5 |       | 2019-01-14 | 2019-01-20 |       116 | Sharyn Winford | 23 Prospect Route | QPC735        | Pink   |        6 |           4 | Alverta Hunkins
+(2 rows)
+
+psql:part7.sql:64: ERROR:  cannot insert into view "mechanics_experience"
+DETAIL:  Views containing GROUP BY are not automatically updatable.
+HINT:  To enable inserting into the view, provide an INSTEAD OF INSERT trigger or an unconditional ON INSERT DO INSTEAD rule.
+psql:part7.sql:66: ERROR:  cannot insert into view "detailed_rentals"
+DETAIL:  Views that do not select from a single table or view are not automatically updatable.
+HINT:  To enable inserting into the view, provide an INSTEAD OF INSERT trigger or an unconditional ON INSERT DO INSTEAD rule.
