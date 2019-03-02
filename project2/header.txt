@@ -192,3 +192,22 @@ Indexes:
 Foreign-key constraints:
     "repairfrequency_model_id_fkey" FOREIGN KEY (model_id) REFERENCES truckmodels(model_id)
     "repairfrequency_repair_name_fkey" FOREIGN KEY (repair_name) REFERENCES repairtypes(repair_name)
+    
+3. 
+
+## Output of running part3.sql (which creates the tables) ##
+
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+      repair_name      |                             description                              
+-----------------------+----------------------------------------------------------------------
+ engine maintenance    | thermocapacitor is broken, need to re-attach frame
+ carwash               | the vehicle is functional, but needs to be cleaned for next customer
+ mechanical inspection | previous customer reported abnormal sounds when breaking
+ change tires          | tires have not been changed for more than 4 years
+ windshield is damaged | an object hit the windshield, needs to be replaced or patched
+(5 rows)
+
