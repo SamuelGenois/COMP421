@@ -155,7 +155,7 @@ DO $$
     FOR counter IN 1..20 LOOP
       -- Pick a first and last name at random
       randomname := CONCAT((SELECT name FROM firstname ORDER BY random() LIMIT 1), ' ', (SELECT name FROM lastname ORDER BY random() LIMIT 1));
-      INSERT INTO employees VALUES (round(random() * 1000), randomname);
+      INSERT INTO employees (employee_name) VALUES (randomname);
     END LOOP;
 END$$;
 

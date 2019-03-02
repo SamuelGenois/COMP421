@@ -27,19 +27,19 @@ CREATE TABLE trucks
 
 CREATE TABLE employees
   (
-     employee_id   CHAR(9) PRIMARY KEY,
+     employee_id   SERIAL PRIMARY KEY,
      employee_name VARCHAR(40)
   );
 
 CREATE TABLE mechanics
   (
-     employee_id    CHAR(9) PRIMARY KEY REFERENCES employees(employee_id),
+     employee_id    INT PRIMARY KEY REFERENCES employees(employee_id),
      specialization VARCHAR(20)
   );
 
 CREATE TABLE salesmen
   (
-     employee_id CHAR(9) PRIMARY KEY REFERENCES employees(employee_id)
+     employee_id    INT PRIMARY KEY REFERENCES employees(employee_id)
   );
 
 CREATE TABLE appointments
@@ -47,7 +47,7 @@ CREATE TABLE appointments
      appointment_id SERIAL PRIMARY KEY,
      date           DATE,
      license_plate  CHAR(6) REFERENCES trucks(license_plate),
-     employee_id    CHAR(9) REFERENCES mechanics(employee_id)
+     employee_id    INT REFERENCES mechanics(employee_id)
   );
 
 CREATE TABLE rentals
@@ -58,7 +58,7 @@ CREATE TABLE rentals
      end_date      DATE,
      rentee_id     INT REFERENCES rentees(rentee_id),
      license_plate CHAR(6) REFERENCES trucks(license_plate),
-     employee_id   CHAR(9) REFERENCES salesmen(employee_id)
+     employee_id   INT REFERENCES salesmen(employee_id)
   );
 
 CREATE TABLE repairs
