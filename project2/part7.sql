@@ -63,4 +63,4 @@ WHERE
 -- Data cannot be inserted into this view because it utilises aggregate functions and a GROUP BY clause.
 INSERT INTO MECHANICS_EXPERIENCE VALUES (13, 'Mathieu Fryman', 3, 'Chiller truck', 'Trucks & co.', 7);
 -- Data cannot be inserted as a full row of this view because it queries data from multiple tables.
-INSERT INTO DETAILED_RENTALS VALUES (4, 5.23, '2019-01-30', '2019-01-15', 4, 'Bob Ruppert', '248 Prospect Route', 'LDY856', 'Yellow', 3, 3, 'Alverta Ketcham');
+INSERT INTO DETAILED_RENTALS VALUES (6, 5.23, '2019-01-30', '2019-01-15', 4, 'Bob Ruppert', '248 Prospect Route', 'LDY856', 'Yellow', 3, 3, 'Alverta Ketcham');
