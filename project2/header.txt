@@ -6,7 +6,7 @@ Samuel Genois 260 692 287
 Project - Part 2
 
 0. Having not received any feedback, we used our schema from part 1 as is.
-1. ##### Output of running part2.sql (which creates the tables) #####
+1. ##### Output of part2.sql (which creates the tables) #####
 
 CREATE TABLE
 CREATE TABLE
@@ -191,7 +191,7 @@ Foreign-key constraints:
     "repairfrequency_model_id_fkey" FOREIGN KEY (model_id) REFERENCES truckmodels(model_id)
     "repairfrequency_repair_name_fkey" FOREIGN KEY (repair_name) REFERENCES repairtypes(repair_name)
     
-3. ##### Output of running part3.sql #####
+3. ##### Output of part3.sql #####
 
 INSERT 0 1
 INSERT 0 1
@@ -207,7 +207,7 @@ INSERT 0 1
  windshield is damaged | an object hit the windshield, needs to be replaced or patched
 (5 rows)
 
-4. ##### Output of running part4.sql #####
+4. ##### Output of part4.sql #####
 
 CREATE TABLE
 INSERT 0 29
@@ -442,3 +442,72 @@ INSERT 0 1
     5 |              3 | Oil change
     5 |              4 | Oil change
 (5 rows)
+
+5. ##### Output of part5.sql #####
+
+ appointment_id |    date    | total_cost 
+----------------+------------+------------
+              3 | 2012-01-06 |          5
+              1 | 2019-01-16 |        390
+              2 | 2019-01-06 |          5
+              4 | 2012-01-06 |          5
+(4 rows)
+
+ license_plate |     model_name     | manufacturer 
+---------------+--------------------+--------------
+ GRY520        | Curtain side truck | SuperTrucks
+ APE510        | Mobile crane       | Trucks & co.
+(2 rows)
+
+ employee_id |  employee_name   |   total_sales    
+-------------+------------------+------------------
+           3 | Maxence Bran     |                 
+           4 | Sharyn Ruppert   |                 
+           1 | Rona Montgomery  | 266.304914070359
+           2 | Kristeen Gandara | 91.5675979809452
+(4 rows)
+
+ model_id |      model_name      | manufacturer | repair_name | avg_cost 
+----------+----------------------+--------------+-------------+----------
+        1 | Full car transporter | Trucks & co. | Oil change  |       15
+        1 | Full car transporter | Trucks & co. | Tire change |      345
+        2 | Concrete mixer truck | Trucks & co. | Oil change  |       15
+        2 | Concrete mixer truck | Trucks & co. | Tire change |      345
+        3 | Chiller truck        | Trucks & co. | Oil change  |       15
+        3 | Chiller truck        | Trucks & co. | Tire change |      345
+        4 | Mobile crane         | Trucks & co. | Oil change  |       15
+        4 | Mobile crane         | Trucks & co. | Tire change |      345
+        5 | Curtain side truck   | Trucks & co. | Oil change  |       15
+        5 | Curtain side truck   | Trucks & co. | Tire change |      345
+        6 | Full car transporter | SuperTrucks  | Oil change  |       15
+        6 | Full car transporter | SuperTrucks  | Tire change |      345
+        7 | Concrete mixer truck | SuperTrucks  | Oil change  |       15
+        7 | Concrete mixer truck | SuperTrucks  | Tire change |      345
+        8 | Curtain side truck   | SuperTrucks  | Oil change  |       15
+        8 | Curtain side truck   | SuperTrucks  | Tire change |      345
+(16 rows)
+
+ employee_id |   employee_name   | latest_activity 
+-------------+-------------------+-----------------
+           8 | Jenniffer Ketcham | 
+          10 | Eleonor Plante    | 
+          16 | Eleonor Fryman    | 
+           7 | John Lapointe     | 
+          13 | Rick Zale         | 
+           9 | Mariah Frenette   | 
+          12 | Colby Simmon      | 
+          19 | Rona Parker       | 
+          14 | John Lapointe     | 
+          17 | Mathieu Frenette  | 
+           6 | Rick Frew         | 
+          15 | John Frenette     | 
+          18 | Eleonor Fryman    | 
+           5 | Gabriella Marsden | 
+          11 | Hobert Genois     | 2019-01-16
+           4 | Sharyn Ruppert    | 2019-01-14
+           3 | Maxence Bran      | 2019-01-07
+          20 | Rona Eaddy        | 2019-01-06
+           2 | Kristeen Gandara  | 2019-01-03
+           1 | Rona Montgomery   | 2019-01-01
+(20 rows)
+
