@@ -62,6 +62,8 @@ try {
   fail_on_error("An SQL error occured: <strong>" . $e->getMessage() . "</strong>");
 }
 
+success('A new rental was created from date '.$from_date.' to date '.$to_date);
+
 // ###################
 // ## SQL FUNCTIONS ##
 // ###################
