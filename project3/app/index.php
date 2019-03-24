@@ -29,7 +29,7 @@
     ?>
     <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#schedule-rental">Schedule a Rental</button></p>
     <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#schedule-maintenance">Schedule a Maintenance</button></p>
-    <p><button type="button" class="btn btn-primary">Show Rentals</button></p>
+    <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#show-rentals">Show Rentals</button></p>
     <p><button type="button" class="btn btn-primary">A Mechanic is Sick Today</button></p>
     <p><button type="button" class="btn btn-primary">Something Very Creative</button></p>
     <div class="card">
@@ -39,7 +39,7 @@
     </div>
   </div>
 
-  <!-- <div class="modal fade" id="schedule-rental" tabindex="-1" role="dialog" aria-labelledby="schedule-rental-label" aria-hidden="true">
+  <div class="modal fade" id="schedule-rental" tabindex="-1" role="dialog" aria-labelledby="schedule-rental-label" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -67,13 +67,13 @@
               <input name="salesman" type="text" class="form-control" id="salesman">
             </div>
             <button type="submit" class="btn btn-primary mb-2">Submit</button>
-            </form>
           </form>
         </div>
       </div>
-    </div> -->
+    </div>
+  </div>
 
-    <div class="modal fade" id="schedule-maintenance" tabindex="-1" role="dialog" aria-labelledby="schedule-maintenance-label" aria-hidden="true">
+  <div class="modal fade" id="schedule-maintenance" tabindex="-1" role="dialog" aria-labelledby="schedule-maintenance-label" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -105,12 +105,30 @@
               <input name="repair_name" type="text" class="form-control" id="repair_name">
             </div>
             <button type="submit" class="btn btn-primary mb-2">Submit</button>
-            </form>
           </form>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="show-rentals" tabindex="-1" role="dialog" aria-labelledby="show-rentals-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="show-rentals-label">Show rentals</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form role="form" method="post" action="show-rental.php">
+            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
