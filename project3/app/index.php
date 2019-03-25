@@ -1,3 +1,16 @@
+<?php
+include 'config.php';
+include 'helpers.php';
+
+$db = new PDO('pgsql:host='.$CONFIG['database']['host'].';dbname='.$CONFIG['database']['db'],
+$CONFIG['database']['user'],
+$CONFIG['database']['password'],
+[]);
+
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+?>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 
@@ -31,7 +44,7 @@
     <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#schedule-maintenance">Schedule a Maintenance</button></p>
     <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#show-rentals">Show Rentals</button></p>
     <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sick-mechanics">A Mechanic is Sick Today</button></p>
-    <p><button type="button" class="btn btn-primary">Something Very Creative</button></p>
+    <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#change-specialization">Change Mechanics Specialization</button></p>
     <div class="card">
       <div class="card-body">
         Proudly powered by PHP!
@@ -131,16 +144,6 @@
             </thead>
             <tbody>
               <?php
-                include 'config.php';
-                include 'helpers.php';
-
-                $db = new PDO('pgsql:host='.$CONFIG['database']['host'].';dbname='.$CONFIG['database']['db'],
-                $CONFIG['database']['user'],
-                $CONFIG['database']['password'],
-                []);
-
-                $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
                 $sql = "SELECT * FROM rentals ORDER BY start_date;";
 
                 $stmt = $db->prepare($sql);
@@ -154,6 +157,46 @@
               ?>
             </tbody>
           </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="change-specialization" tabindex="-1" role="dialog" aria-labelledby="change-specialization-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="change-specialization-label">Change Mechanics Specialization</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="change-specialization.php">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Employee Id</th>
+                  <th scope="col">Specialization</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                  $sql = "SELECT * FROM mechanics ORDER BY employee_id;";
+
+                  $stmt = $db->prepare($sql);
+                  $stmt->execute();
+
+                  $mechanics = $stmt->fetchAll();
+
+                  foreach ($mechanics as $mechanic) {
+                    echo '<tr scope="row"><td>'.$mechanic["employee_id"].'</td><td><input type="text"  class="form-control" name="'.$mechanic["employee_id"].'" value="'.$mechanic["specialization"].'"/></td></tr>';
+                  }
+                ?>
+              </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary mb-2">Save changes</button>
+          </form>
         </div>
       </div>
     </div>
