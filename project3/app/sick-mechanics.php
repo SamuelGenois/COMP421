@@ -36,8 +36,31 @@ try {
 
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  var_dump(maintenances_to_move($db, $mechanics, $date));
-  exit();
+  $appointments = appointments_to_move($db, $mechanics, $date);
+
+  $appointments_to_cancel = [];
+
+  foreach ($appointments as $appointment) {
+    $new_mechanic = free_mechanic($db, $date);
+    if ($new_mechanic == NULL) {
+      array_push($appointments_to_cancel, $appointment["appointment_id"]);
+      continue;
+    }
+    change_appointment_mechanic($db, $appointment["appointment_id"], $new_mechanic["employee_id"]);
+  }
+
+  foreach ($appointments_to_cancel as $appointment_to_cancel) {
+    cancel_appointment($db, $appointment_to_cancel["appointment_id"]);
+  }
+
+  $message = "Correctly rescheduled appointments ".property_array_to_string($appointments, "appointment_id");
+
+  if (count($appointments_to_cancel) > 0) {
+    $message .= property_array_to_string($appointments_to_cancel, "appointment_id")
+    ." had to be canceled due to missing available mechanics";
+  }
+
+  success($message);
 } catch (PDOException $e) {
   fail_on_error("An SQL error occured: <strong>" . $e->getMessage() . "</strong>");
 }
@@ -49,7 +72,7 @@ success('A new rental was created from date '.$from_date.' to date '.$to_date);
 // ###################
 
 // This functions reuse a query made during part 2 of the project
-function maintenances_to_move($db, $mechanics_id, $date) {
+function appointments_to_move($db, $mechanics_id, $date) {
   $sql = "SELECT * FROM appointments WHERE employee_id=:employee_id AND date=:date";
 
   $stmt = $db->prepare($sql);
@@ -59,28 +82,36 @@ function maintenances_to_move($db, $mechanics_id, $date) {
   return $stmt->fetchAll();
 }
 
-// Returns one object representing one available truck
-// If there are not available truck, the method returns NULL
-// This functions reuse a query made during part 2 of the project
-function get_one_available_truck($db, $from_date, $to_date) {
-  $sql = "
-    SELECT * FROM trucks t
-    WHERE
-      -- Ignore all trucks that have a repair appointment during the desired renting period
-      (SELECT COUNT(*) FROM appointments WHERE license_plate = t.license_plate AND date >= :from_date AND date <= :to_date)=0
-    AND
-      -- Ignore all trucks that already have a renting overlapping the desired period
-      (SELECT COUNT(*) FROM rentals
-        WHERE license_plate = t.license_plate
-        AND (
-          (start_date >= :from_date AND start_date <= :to_date)
-          OR (end_date >= :from_date AND end_date <= :to_date)
-          OR (start_date <= :from_date AND end_date >= :to_date)))=0";
+// Returns a mechanics that has no appointment on that day (NULL is none)
+function free_mechanic($db, $date) {
+  $sql = "SELECT * FROM mechanics WHERE
+    NOT EXISTS(
+      SELECT * FROM appointments WHERE
+        date=:date AND employee_id=mechanics.employee_id);";
 
   $stmt = $db->prepare($sql);
-  $stmt->bindParam(':from_date', $from_date, PDO::PARAM_STR);
-  $stmt->bindParam(':to_date', $to_date, PDO::PARAM_STR);
+  $stmt->bindParam(':date', $date, PDO::PARAM_STR);
   $stmt->execute();
-
   return $stmt->fetch();
+}
+
+function change_appointment_mechanic($db, $appointment_id, $mechanics_id) {
+  $sql = "UPDATE appointments SET employee_id=:mechanics_id WHERE appointment_id=:appointment_id";
+
+  $stmt = $db->prepare($sql);
+  $data = [
+    "appointment_id" => $appointment_id,
+    "mechanics_id" => $mechanics_id,
+  ];
+  $stmt->execute($data);
+}
+
+function cancel_appointment($db, $appointment_id) {
+  $sql = "DELETE FROM appointments WHERE appointment_id=:appointment_id";
+
+  $stmt = $db->prepare($sql);
+  $data = [
+    "appointment_id" => $appointment_id,
+  ];
+  $stmt->execute($data);
 }
