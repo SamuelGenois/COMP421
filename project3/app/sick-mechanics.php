@@ -42,13 +42,14 @@ try {
 
   foreach ($appointments as $appointment) {
     $new_mechanic = free_mechanic($db, $date);
-    if ($new_mechanic == NULL) {
-      array_push($appointments_to_cancel, $appointment["appointment_id"]);
+    if ($new_mechanic != NULL) {
+      array_push($appointments_to_cancel, $appointment);
       continue;
     }
     change_appointment_mechanic($db, $appointment["appointment_id"], $new_mechanic["employee_id"]);
   }
 
+  // TODO: test if this works
   foreach ($appointments_to_cancel as $appointment_to_cancel) {
     cancel_appointment($db, $appointment_to_cancel["appointment_id"]);
   }
@@ -56,7 +57,8 @@ try {
   $message = "Correctly rescheduled appointments ".property_array_to_string($appointments, "appointment_id");
 
   if (count($appointments_to_cancel) > 0) {
-    $message .= property_array_to_string($appointments_to_cancel, "appointment_id")
+    $message .= "but had to cancel appointments "
+    .property_array_to_string($appointments_to_cancel, "appointment_id")
     ." had to be canceled due to missing available mechanics";
   }
 
