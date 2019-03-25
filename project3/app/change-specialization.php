@@ -30,7 +30,7 @@ try {
   fail_on_error("An SQL error occured: <strong>" . $e->getMessage() . "</strong>");
 }
 
-success('All the changes were saved.');
+success('All changes were saved.');
 
 // ###################
 // ## SQL FUNCTIONS ##

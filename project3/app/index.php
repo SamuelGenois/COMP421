@@ -37,7 +37,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       echo '<div class="alert alert-danger" role="alert">Error: '.$_GET['error'].'</div>';
     }
     if (isset($_GET['success'])) {
-      echo '<div class="alert alert-success" role="alert">Sucess: '.$_GET['success'].'</div>';
+      echo '<div class="alert alert-success" role="alert">Success: '.$_GET['success'].'</div>';
     }
     ?>
     <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#schedule-rental">Schedule a Rental</button></p>
