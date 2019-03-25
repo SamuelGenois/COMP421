@@ -121,9 +121,39 @@
           </button>
         </div>
         <div class="modal-body">
-          <form role="form" method="post" action="show-rental.php">
-            <button type="submit" class="btn btn-primary mb-2">Submit</button>
-          </form>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">License Plate</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+                include 'config.php';
+                include 'helpers.php';
+
+                $db = new PDO('pgsql:host='.$CONFIG['database']['host'].';dbname='.$CONFIG['database']['db'],
+                $CONFIG['database']['user'],
+                $CONFIG['database']['password'],
+                []);
+
+                $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                $sql = "SELECT * FROM rentals ORDER BY start_date;";
+
+                $stmt = $db->prepare($sql);
+                $stmt->execute();
+
+                $appointments = $stmt->fetchAll();
+
+                foreach ($appointments as $appointment) {
+                  echo '<tr scope="row"><td>'.$appointment["license_plate"].'</td><td>'.$appointment["start_date"].'</td><td>'.$appointment["end_date"].'</td></tr>';
+                }
+              ?>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
