@@ -49,12 +49,12 @@ try {
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   $employees = try_find_employee($db, $employee_id);
-  if (empty($employees)) { 
+  if (empty($employees)) {
     fail_on_error('Employee does not exist');
   }
 
   $repair = try_find_repair_type($db, $repair_name);
-  if (empty($repair)) { 
+  if (empty($repair)) {
     fail_on_error('Repair type does not exist');
   }
 
