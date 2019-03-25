@@ -59,20 +59,17 @@ try {
   }
 
   // Create an appointment
-  $appointment = make_appointment($db, $date, $license_plate, $employee_id);
+  make_appointment($db, $date, $license_plate, $employee_id);
 
-  //TODO check appointment successfully created
-  if (!$appointment) {
-    fail_on_error('Could not create appointment');
-  }
+  $appointment_id = $db->lastInsertId();
 
-  schedule_maintenance($db, $cost, $appointment['appointment_id'], $repair_name);
+  schedule_maintenance($db, $cost, $appointment_id, $repair_name);
 
 } catch (PDOException $e) {
   fail_on_error("An SQL error occured: <strong>" . $e->getMessage() . "</strong>");
 }
 
-success('A new maintenance appointment was schduled on date '.$date);
+success('A new maintenance appointment was scheduled on date '.$date);
 
 // ###################
 // ## SQL FUNCTIONS ##
@@ -98,7 +95,7 @@ function schedule_maintenance($db, $cost, $appointment_id, $repair_name) {
 
 function make_appointment($db, $date, $license_plate, $employee_id) {
   $sql = "
-    INSERT INTO appointments (date, license_plate, $employee_id) VALUES (
+    INSERT INTO appointments (date, license_plate, employee_id) VALUES (
       :date,
       :license_plate,
       :employee_id
