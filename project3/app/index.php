@@ -28,8 +28,8 @@
     }
     ?>
     <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#schedule-rental">Schedule a Rental</button></p>
-    <p><button type="button" class="btn btn-primary">Schedule a Maintenance</button></p>
-    <p><button type="button" class="btn btn-primary">Show Rentals</button></p>
+    <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#schedule-maintenance">Schedule a Maintenance</button></p>
+    <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#show-rentals">Show Rentals</button></p>
     <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sick-mechanics">A Mechanic is Sick Today</button></p>
     <p><button type="button" class="btn btn-primary">Something Very Creative</button></p>
     <div class="card">
@@ -67,7 +67,62 @@
               <input name="salesman" type="text" class="form-control" id="salesman">
             </div>
             <button type="submit" class="btn btn-primary mb-2">Submit</button>
-            </form>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="schedule-maintenance" tabindex="-1" role="dialog" aria-labelledby="schedule-maintenance-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="schedule-maintenance-label">Schedule a Maintenance</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form role="form" method="post" action="schedule-maintenance.php">
+            <div class="form-group">
+              <label for="date" class="control-label">date</label>
+              <input name="date" type="date" class="form-control" id="date">
+            </div>
+            <div class="form-group">
+              <label for="license_plate" class="control-label">License plate</label>
+              <input name="license_plate" type="text" class="form-control" id="license_plate">
+            </div>
+            <div class="form-group">
+              <label for="employee_id" class="control-label">Employee Id</label>
+              <input name="employee_id" type="text" class="form-control" id="employee_id">
+            </div>
+            <div class="form-group">
+              <label for="cost" class="control-label">Cost</label>
+              <input name="cost" type="text" class="form-control" id="cost">
+            </div>
+            <div class="form-group">
+              <label for="repair_name" class="control-label">Repair type</label>
+              <input name="repair_name" type="text" class="form-control" id="repair_name">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="show-rentals" tabindex="-1" role="dialog" aria-labelledby="show-rentals-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="show-rentals-label">Show rentals</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form role="form" method="post" action="show-rental.php">
+            <button type="submit" class="btn btn-primary mb-2">Submit</button>
           </form>
         </div>
       </div>
