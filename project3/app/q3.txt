@@ -1,0 +1,19 @@
+The first index was created on appointments.date simply because it is used frequently and therefore the additional storage for the index is justified. An example where this index is useful is when determining whether a mechanics has an appointment on the current day:
+
+SELECT * FROM mechanics WHERE
+    NOT EXISTS(
+      SELECT * FROM appointments WHERE
+        date=:date AND employee_id=mechanics.employee_id);
+
+Since there is an index on date as well as on employee_id (since it's a primary key), binary search will be used to find the matching records.
+
+The second index we created is on both rentals.start_date and rentals.end_date for the exact same reason mentionned above. It will speedup queries such as this one (taken directly from schedule-rental.php):
+
+INSERT INTO rentals (price, start_date, end_date, rentee_id, license_plate, employee_id) VALUES (
+    0, -- The price will be updated with distance
+     :from_date,
+     :to_date,
+     :rentee_id,
+     :license_plate,
+     :employee_id
+    );"
