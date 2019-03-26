@@ -1,0 +1,2 @@
+\COPY (SELECT e.employee_id, start_date AS date, SUM(price) AS revenue FROM employees AS e INNER JOIN rentals AS r ON e.employee_id=r.employee_id GROUP BY e.employee_id, start_date) to vis1.csv with csv
+\COPY (SELECT e.employee_id, date, SUM(cost) AS revenue FROM employees AS e INNER JOIN appointments AS a ON e.employee_id=a.employee_id INNER JOIN repairs AS r ON a.appointment_id=r.appointment_id GROUP BY e.employee_id, date) to vis2.csv with csv

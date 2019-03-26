@@ -219,17 +219,6 @@ DO $$
     END LOOP;
 END$$;
 
--- #####################
--- ###### Rentals ######
--- #####################
-INSERT INTO rentals (price, start_date, end_date, rentee_id, license_plate, employee_id) VALUES (1300, '2019-01-01', '2019-01-13', (SELECT rentee_id FROM rentees LIMIT 1), (SELECT license_plate FROM trucks LIMIT 1), (SELECT employee_id FROM salesmen LIMIT 1));
-
-INSERT INTO rentals (price, start_date, end_date, rentee_id, license_plate, employee_id)  VALUES (200, '2019-01-03', '2019-01-05', (SELECT rentee_id FROM rentees OFFSET 1 LIMIT 1), (SELECT license_plate FROM trucks OFFSET 1 LIMIT 1), (SELECT employee_id FROM salesmen OFFSET 1 LIMIT 1));
-
-INSERT INTO rentals (price, start_date, end_date, rentee_id, license_plate, employee_id)  VALUES (800, '2019-01-02', '2019-01-10', (SELECT rentee_id FROM rentees OFFSET 2 LIMIT 1), (SELECT license_plate FROM trucks OFFSET 2 LIMIT 1), (SELECT employee_id FROM salesmen OFFSET 2 LIMIT 1));
-
-INSERT INTO rentals (price, start_date, end_date, rentee_id, license_plate, employee_id)  VALUES (1700, '2019-01-07', '2019-01-24', (SELECT rentee_id FROM rentees OFFSET 3 LIMIT 1), (SELECT license_plate FROM trucks OFFSET 1 LIMIT 1), (SELECT employee_id FROM salesmen OFFSET 2 LIMIT 1));
-
 -- ########################
 -- ###### Datapoints ######
 -- ########################
@@ -258,23 +247,6 @@ INSERT INTO repairtypes VALUES ('Inspection', 'General inspection of the truck')
 INSERT INTO repairtypes VALUES ('Motor reparation', '');
 INSERT INTO repairtypes VALUES ('Structure reparation', '');
 
--- ##########################
--- ###### Appointments ######
--- ##########################
-INSERT INTO appointments (date, license_plate, employee_id) VALUES ('2019-01-16', (SELECT license_plate FROM rentals WHERE rental_id='1'), (SELECT employee_id FROM mechanics OFFSET 1 LIMIT 1));
-INSERT INTO appointments (date, license_plate, employee_id) VALUES ('2019-01-06', (SELECT license_plate FROM rentals WHERE rental_id='2'), (SELECT employee_id FROM mechanics LIMIT 1));
-INSERT INTO appointments (date, license_plate, employee_id) VALUES ('2012-01-06', (SELECT license_plate FROM rentals WHERE rental_id='1'), (SELECT employee_id FROM mechanics LIMIT 1));
-INSERT INTO appointments (date, license_plate, employee_id) VALUES ('2012-01-06', (SELECT license_plate FROM rentals WHERE rental_id='2'), (SELECT employee_id FROM mechanics LIMIT 1));
-
--- #####################
--- ###### Repairs ######
--- #####################
-INSERT INTO repairs VALUES (345, 1, 'Tire change');
-INSERT INTO repairs VALUES (45, 1, 'Oil change');
-INSERT INTO repairs VALUES (5, 2, 'Oil change');
-INSERT INTO repairs VALUES (5, 3, 'Oil change');
-INSERT INTO repairs VALUES (5, 4, 'Oil change');
-
 -- ################################
 -- ###### Repair Frequencies ######
 -- ################################
@@ -296,47 +268,77 @@ INSERT INTO repairfrequency VALUES (360, 6, 'Tire change');
 INSERT INTO repairfrequency VALUES (620, 7, 'Tire change');
 INSERT INTO repairfrequency VALUES (540, 8, 'Tire change');
 
-\echo ###########################
-\echo ######### Rentees #########
-\echo ###########################
+DO $$
+  DECLARE
+    random_license_plate VARCHAR(6);
+    random_employee_id INT;
+    random_rentee_id INT;
+    random_revenue INT;
+    d DATE;
+  BEGIN
+    FOR c1 IN 0..354 LOOP
+      d := DATE '2018-01-01' + c1 * INTERVAL '1 day';
+      -- Create appointments and repairs
+      FOR c2 IN 1..2 LOOP
+        random_license_plate := (SELECT license_plate FROM trucks ORDER BY random() LIMIT 1);
+        random_employee_id := (SELECT employee_id FROM mechanics ORDER BY random() LIMIT 1);
+        random_revenue := floor(random()*(499))+1;
+        INSERT INTO appointments VALUES (c1*2+c2, d, random_license_plate, random_employee_id);
+        INSERT INTO repairs VALUES (random_revenue, c1*2+c2, 'Oil change');
+      END LOOP;
+      -- Create retals
+      FOR c2 IN 1..2 LOOP
+        random_license_plate := (SELECT license_plate FROM trucks ORDER BY random() LIMIT 1);
+        random_employee_id := (SELECT employee_id FROM salesmen ORDER BY random() LIMIT 1);
+        random_rentee_id := (SELECT employee_id FROM salesmen ORDER BY random() LIMIT 1);
+        random_revenue := floor(random()*(399))+1;
+        INSERT INTO rentals VALUES (c1*2+c2, random_revenue, d, d + INTERVAL '1 month', random_rentee_id, random_license_plate, random_employee_id);
+      END LOOP;
+      
+    END LOOP;
+  END $$
+
+--###########################
+--######### Rentees #########
+--###########################
 SELECT * FROM Rentees LIMIT 10;
-\echo #####################################
-\echo ######### Repair Frequenciy #########
-\echo #####################################
+--#####################################
+--######### Repair Frequenciy #########
+--#####################################
 SELECT * FROM repairfrequency LIMIT 10;
-\echo #############################
-\echo ######### Employees #########
-\echo #############################
+--#############################
+--######### Employees #########
+--#############################
 SELECT * FROM employees LIMIT 10;
-\echo ############################
-\echo ######### Salesmen #########
-\echo ############################
+--############################
+--######### Salesmen #########
+--############################
 SELECT * FROM salesmen LIMIT 10;
-\echo #############################
-\echo ######### Mechanics #########
-\echo #############################
+--#############################
+--######### Mechanics #########
+--#############################
 SELECT * FROM mechanics LIMIT 10;
-\echo ################################
-\echo ######### Truck Models #########
-\echo ################################
+--################################
+--######### Truck Models #########
+--################################
 SELECT * FROM truckmodels LIMIT 10;
-\echo ###########################
-\echo ######### Trucks ##########
-\echo ###########################
+--###########################
+--######### Trucks ##########
+--###########################
 SELECT * FROM trucks LIMIT 10;
-\echo ###########################
-\echo ######### Rentals #########
-\echo ###########################
+--###########################
+--######### Rentals #########
+--###########################
 SELECT * FROM rentals LIMIT 10;
-\echo ################################
-\echo ######### Repair Types #########
-\echo ################################
+--################################
+--######### Repair Types #########
+--################################
 SELECT * FROM repairtypes LIMIT 10;
-\echo ################################
-\echo ######### Appointments #########
-\echo ################################
+--################################
+--######### Appointments #########
+--################################
 SELECT * FROM appointments LIMIT 10;
-\echo ###########################
-\echo ######### Repair ##########
-\echo ###########################
+--###########################
+--######### Repair ##########
+--###########################
 SELECT * FROM repairs LIMIT 10;
