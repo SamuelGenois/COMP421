@@ -49,7 +49,6 @@ try {
     change_appointment_mechanic($db, $appointment["appointment_id"], $new_mechanic["employee_id"]);
   }
 
-  // TODO: test if this works
   foreach ($appointments_to_cancel as $appointment_to_cancel) {
     cancel_appointment($db, $appointment_to_cancel["appointment_id"]);
   }
