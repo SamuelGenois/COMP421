@@ -222,21 +222,21 @@ END$$;
 -- ########################
 -- ###### Datapoints ######
 -- ########################
-INSERT INTO datapoints VALUES ('2019-01-03', point(4551, -7358), 0.8, 1);
-INSERT INTO datapoints VALUES ('2019-01-04', point(4370, -7941), 0.7, 1);
-INSERT INTO datapoints VALUES ('2019-01-05', point(4370, -7358), 0.65, 1);
-INSERT INTO datapoints VALUES ('2019-01-06', point(4551, -7358), 0.6, 1);
-INSERT INTO datapoints VALUES ('2019-01-07', point(4683, -7125), 0.5, 1);
-INSERT INTO datapoints VALUES ('2019-01-08', point(4560, -7135), 0.4, 1);
-INSERT INTO datapoints VALUES ('2019-01-09', point(4440, -7376), 0.3, 1);
-INSERT INTO datapoints VALUES ('2019-01-10', point(4230, -7333), 0.2, 1);
-INSERT INTO datapoints VALUES ('2019-01-11', point(4370, -7938), 1, 1);
-INSERT INTO datapoints VALUES ('2019-01-12', point(4540, -7320), 0.9, 1);
-INSERT INTO datapoints VALUES ('2019-01-13', point(4551, -7358), 0.87, 1);
+-- INSERT INTO datapoints VALUES ('2019-01-03', point(4551, -7358), 0.8, 1);
+-- INSERT INTO datapoints VALUES ('2019-01-04', point(4370, -7941), 0.7, 1);
+-- INSERT INTO datapoints VALUES ('2019-01-05', point(4370, -7358), 0.65, 1);
+-- INSERT INTO datapoints VALUES ('2019-01-06', point(4551, -7358), 0.6, 1);
+-- INSERT INTO datapoints VALUES ('2019-01-07', point(4683, -7125), 0.5, 1);
+-- INSERT INTO datapoints VALUES ('2019-01-08', point(4560, -7135), 0.4, 1);
+-- INSERT INTO datapoints VALUES ('2019-01-09', point(4440, -7376), 0.3, 1);
+-- INSERT INTO datapoints VALUES ('2019-01-10', point(4230, -7333), 0.2, 1);
+-- INSERT INTO datapoints VALUES ('2019-01-11', point(4370, -7938), 1, 1);
+-- INSERT INTO datapoints VALUES ('2019-01-12', point(4540, -7320), 0.9, 1);
+-- INSERT INTO datapoints VALUES ('2019-01-13', point(4551, -7358), 0.87, 1);
 
-INSERT INTO datapoints VALUES ('2019-01-03', point(4551, -7358), 1, 2);
-INSERT INTO datapoints VALUES ('2019-01-04', point(4370, -7941), 0.8, 2);
-INSERT INTO datapoints VALUES ('2019-01-05', point(4551, -7358), 0.6, 2);
+-- INSERT INTO datapoints VALUES ('2019-01-03', point(4551, -7358), 1, 2);
+-- INSERT INTO datapoints VALUES ('2019-01-04', point(4370, -7941), 0.8, 2);
+-- INSERT INTO datapoints VALUES ('2019-01-05', point(4551, -7358), 0.6, 2);
 
 -- ##########################
 -- ###### Repair Types ######
@@ -286,17 +286,25 @@ DO $$
         INSERT INTO appointments VALUES (c1*2+c2, d, random_license_plate, random_employee_id);
         INSERT INTO repairs VALUES (random_revenue, c1*2+c2, 'Oil change');
       END LOOP;
-      -- Create retals
+      -- Create rentals
       FOR c2 IN 1..2 LOOP
         random_license_plate := (SELECT license_plate FROM trucks ORDER BY random() LIMIT 1);
         random_employee_id := (SELECT employee_id FROM salesmen ORDER BY random() LIMIT 1);
         random_rentee_id := (SELECT employee_id FROM salesmen ORDER BY random() LIMIT 1);
         random_revenue := floor(random()*(399))+1;
-        INSERT INTO rentals VALUES (c1*2+c2, random_revenue, d, d + INTERVAL '1 month', random_rentee_id, random_license_plate, random_employee_id);
+        rental_id := c1*2+c2;
+        INSERT INTO rentals VALUES (rental_id, random_revenue, d, d + INTERVAL '1 month', random_rentee_id, random_license_plate, random_employee_id);
+
+        FOR c3 IN 0..10 LOOP
+          dd := d + c3 * INTERVAL '1 day';
+          random_point := point(random()*1000, random()*1000);
+          random_fuel_level := random() * 100;
+          INSERT INTO datapoints VALUES (dd, random_point, random_fuel_level, c1*2+c2);
+        END LOOP;
       END LOOP;
       
     END LOOP;
-  END $$
+  END $$;
 
 --###########################
 --######### Rentees #########
