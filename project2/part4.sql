@@ -274,7 +274,11 @@ DO $$
     random_employee_id INT;
     random_rentee_id INT;
     random_revenue INT;
+    rental_id INT;
     d DATE;
+    dd DATE;
+    random_point POINT;
+    random_fuel_level FLOAT;
   BEGIN
     FOR c1 IN 0..354 LOOP
       d := DATE '2018-01-01' + c1 * INTERVAL '1 day';
